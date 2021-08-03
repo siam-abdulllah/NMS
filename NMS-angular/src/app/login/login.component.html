@@ -1,0 +1,56 @@
+<div class="container" style="padding: 0;">
+     <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+           <div style="padding:5% 20% 6% 15%;">
+               <form [formGroup]="loginForm" (ngSubmit) ="login()">
+                     <div class="imgcontainer">
+                           <img src="../../../assets/img/logo/govt-logo.png" alt="DLS Logo">
+                         </div>
+                        <div style="width: 100%;text-align: center;">
+                         <div style="font-size: 24px; font-weight:700; color:#d43a3a;margin-bottom: 5px;">প্রাণিসম্পদ অধিদপ্তর বাংলাদেশ</div>
+                        </div>
+                        <div style="font-size: 20px; font-weight:600; margin-bottom: 20px;">NOC Management System(NMS)</div>
+                         <div style="font-weight:900;font-size:20px; text-align:center; color:#45A845;">
+                              লগইন করুন
+                         </div>
+                   <!-- <div class="container">--> 
+                        <div class="text-center" id="lg-spinner" style="margin-bottom:10px;">
+                              <i class="fas fa-3x fa-spinner fa-pulse" style="color:#54B575" *ngIf="loading"></i>
+                          </div>
+                        <div class="formGroup">
+                           <input type="text" [ngClass]="{'is-invalid': loginForm.get('username').errors && loginForm.get('username').touched}"
+                            class="form-control"  formControlName="username" placeholder="Username">
+                           <div class="invalid-feedback" *ngIf="loginForm.get('username').hasError('required')
+                           && loginForm.get('username').touched">Please enter your username</div>
+                        </div>
+                        <div class="formGroup">
+                           <input type="password" [ngClass]="{'is-invalid': loginForm.get('password').errors && loginForm.get('password').touched}"
+                           class="form-control" formControlName="password" placeholder="Password">
+                           <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">
+                              Please enter your password</div>
+                           <!--<div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('minlength') && loginForm.get('password').touched">
+                              Password must atleast 4 character long</div>
+                           <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('maxlength') && loginForm.get('password').touched">
+                              Password should not more than 8 character long</div>-->
+                        </div>
+                        <div class="formGroup">
+                        <div *ngIf="invalidUserCred"><small style="color: red; font-weight: bold;">Invalid Username or Password</small></div>
+                        <button class="form-control btn-success" [disabled]="loginForm.invalid"
+                         [ngClass]="{'btn-login-disabled':loginForm.invalid}"
+                         style=" padding: 0; color: white;font-size:large; font-weight: 700;">Login</button>
+                        </div>
+                        <div style="text-align: center; margin-top: 10px;">
+                        <span style="font-size: 15px; font-weight: 700">Not registered? 
+                        <button type="button" class="btn btn-sm btn-success btn-register" 
+                        (click)="NavigateToRegister()"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</button>
+                        </span>
+                     </div>
+                  <!--</div>-->
+                </form>
+           </div>
+        </div>
+        <div class="col-md-3"></div>
+     </div>
+</div>
+<!-- <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '0',fullScreenBackdrop:true }"></ngx-loading> -->

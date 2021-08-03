@@ -1,0 +1,92 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>Pick Proforma Invoice</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="content">
+                <div class="m-portlet m-portlet--mobile">
+                    <div class="m-portlet__body">
+                        <div class="row" style="margin: 5px 0px 5px 0px">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-9">
+                                <input name="filterText" class="form-control m-input" type="text"
+                                    [(ngModel)]="filterText" placeholder="Search..">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-embossed btn-danger" (click)="resetFilter()"><i
+                                        class="fa fa-refresh"></i>&nbsp; Reset</button>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+
+                        <div class="row">
+                            <!--<Primeng-Datatable-Start>-->
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="border: 1px solid #dfe4e7; width: 100%;">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead style="background-color: #3c8dbc;color:white;">
+                                            <tr>
+                                                <th style="width: 10px">Actions</th>
+                                                <th style="width: 30px">
+                                                    PI No.
+                                                </th>
+                                                <th style="width: 35px">
+                                                    Submission Date
+                                                </th>
+                                                <th style="width: 35px">
+                                                    Importer Name
+                                                </th>
+                                                <th style="width: 35px">
+                                                    Products
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                *ngFor="let record of records | paginate: { itemsPerPage:5, currentPage: p} | filter: filterText">
+                                                <td style="width: 10px">
+                                                    <div class="btn-group dropdown" normalizePosition>
+                                                        <button class="btn btn-sm btn-primary" type="button"
+                                                            (click)="setAndSave(record)">
+                                                            Select
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td style="width:30px">
+                                                    {{record.proformaInvoiceNo}}
+                                                </td>
+                                                <td style="width:35px">
+                                                    {{record.submissionDate | date}}
+                                                </td>
+                                                <td style="width:35px">
+                                                    {{record.importerInfo.orgName}}
+                                                </td>
+                                                <td style="width:35px">
+                                                    <p *ngFor="let d of record.proformaInvoiceDtls">{{d.prodName}}</p>
+                                                    <br>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-primary blue"
+                        (click)="close()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

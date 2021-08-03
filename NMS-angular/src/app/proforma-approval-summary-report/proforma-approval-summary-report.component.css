@@ -1,0 +1,47 @@
+.date-label{
+    font-size: 15px;;
+}
+.table>thead>tr>th{
+    vertical-align: top !important;
+    border: 1px solid #c8c8c8;
+}
+.table>tbody>tr>td{
+    vertical-align: middle !important;
+    border: 1px solid #c8c8c8;
+    font-size: 14px !important;;
+}
+.table>thead>tr{
+    border-bottom: 2px solid #c8c8c8;
+    background-color: #3c8dbc;
+    color: #ffffff;
+    font-size: 14px;
+}
+ul {
+    padding-left: 5px !important;
+}
+.btn-grid-pdf{
+    padding: 5px 36px !important;
+}
+.btn-pro-approval{
+    margin: 2px !important;
+}
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn{
+    opacity: .50 !important;
+}
+
+table tbody tr:nth-child(even) {
+    background: #f9f9f9 !important;
+}
+table tbody tr:nth-child(odd) {
+    background: #ffffff !important;
+}
+.m-badge{
+    background:#eaeaea;
+    vertical-align:middle;
+    text-align:center;
+    display:inline-block;padding:0px 3px;border-radius:.75rem
+}
+.m-badge--warning{background-color:#ffb822;color:#fff}
+.m-badge--danger{background-color:#d43a3a;color:#fff}
+.m-badge--success{background-color: forestgreen; color: #ffffff;}
+.m-badge--wide{letter-spacing:0px;padding:0px 4px;border-radius:.75rem}

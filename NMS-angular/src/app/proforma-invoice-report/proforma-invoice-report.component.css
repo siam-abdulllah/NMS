@@ -1,0 +1,22 @@
+.table>thead>tr>th{
+    vertical-align: top !important;
+    border: 1px solid #c8c8c8;
+}
+.table>tbody>tr>td{
+    vertical-align: middle !important;
+    border: 1px solid #c8c8c8;
+    font-size: 14px !important;;
+}
+ul {
+    padding-left: 5px !important;
+}
+.ngx-pagination .current {
+    padding: 0.1875rem 0.625rem;
+    background: #00a65a !important;
+    color: #fefefe;
+    cursor: default;
+}
+.m-badge--warning{background-color:#ffb822;color:#fff}
+.m-badge--danger{background-color:#d43a3a;color:#fff}
+.m-badge--success{background-color: forestgreen; color: #ffffff;}
+.m-badge--wide{letter-spacing:0px;padding:0px 4px;border-radius:.75rem}

@@ -1,0 +1,583 @@
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title"><strong>Proforma Invoice Approval</strong></h3>
+
+        </div>
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <form [formGroup]="proformaApprovalSearchForm">
+                <div class="row">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-1" style="margin-top: 5px;">
+                    <label for="from-date" class="control-label date-label">From</label>
+                    <span style="color:red;">*</span>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="from-date" placeholder="From Date"
+                        formControlName="fromDate" bsDatepicker [bsConfig]="bsConfig" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-1" style="margin-top: 5px;">
+                    <label for="to-date" class="control-label date-label">To</label>
+                    <span style="color:red;">*</span>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="to-date" placeholder="To Date" [bsValue]="bsValue"
+                        formControlName="toDate" bsDatepicker [bsConfig]="bsConfig" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-1" style="margin-top: 5px;">
+                    <label for="pending-approval" class="control-label date-label">Pending</label>
+                  </div>
+                  <div class="col-md-1" style="margin-top: 5px;">
+                    <input type="checkbox" class="flat-red" id="pending-approval" formControlName="isPending" />
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" class="btn btn-embossed btn-primary"
+                      (click)="GetDateWiseSubmittedProformaInvoice()" [disabled]="!proformaApprovalSearchForm.valid"><i
+                        class="fa fa-search"></i>Search</button>
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" class="btn btn-embossed btn-danger" (click)="resetDateRange()"><i
+                        class="fa fa-refresh"></i>&nbsp; Reset</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box" style="border-top: white;">
+        <div class="box-body">
+          <div class="row" style="margin: 5px 0px 5px 0px">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+              <input name="filterText" class="form-control m-input" type="text" [(ngModel)]="searchText"
+                placeholder="Search..">
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="table-responsive" style="border: 1px solid #dfe4e7; width: 100%;">
+                <table class="table table-bordered table-hover table-striped">
+                  <thead style="background-color: #3c8dbc;color:white;">
+                    <tr>
+                      <th style="width: 100px;">Action</th>
+                      <th style="width: 200px;">
+                        Name <br>of the <br>Importer
+                      </th>
+                      <th style="width: 200px;">
+                        Name of <br>the Products
+                      </th>
+                      <th style="width: 200px;">
+                        PINo.
+                       </th>
+                      <th style="width: 200px;">Submission Date</th>
+                      <th style="width: 200px;">PI<br> Amount<br>(Ton/Unit)</th>
+                      <th style="width: 200px;">Approved <br> Amount<br>(Ton/Unit)</th>
+                      <th style="width: 150px;">Approval Status</th>
+                      <th style="width: 200px;">Country of <br>Origin</th>
+                      <th style="width: 200px;">
+                        Pack <br>Size</th>
+                      <th style="width: 200px;">
+                        Type
+                      </th>
+                      <th style="width: 150px;text-align: center;">
+                        PI <br>Price
+                      </th>
+                      <th style="width: 200px;text-align: center;">
+                        PI <br>Price(BDT)
+                      </th>
+                      <th scope="col" style="text-align: center;">
+                        Approval <br>Price(BDT)
+                      </th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let p of porformaInfos | paginate: { itemsPerPage:8, currentPage: p} | filter: searchText">
+                      <td>
+                        <div class="btn-group dropdown" dropdown container="body">
+                          <button class="dropdown-toggle btn btn-sm btn-embossed btn-primary" dropdownToggle>
+                            <i class="fa fa-cog"></i><span class="caret"></span> Actions
+                          </button>
+                          <ul class="dropdown-menu" *dropdownMenu>
+                            <li>
+                              <a href="javascript:;" (click)="showDetails(p)">Details</a>
+                            </li>
+                            <li>
+                              <a href="javascript:;" (click)="proformaApproval(p)">Approval</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td>
+                        {{p.importerInfo.orgName}}<br>
+                        <small>{{p.importerInfo.address}}</small>
+                      </td>
+                      <td>
+                        <div>
+                          <ul type="none">
+                            <li *ngFor="let d of p.proformaInvoiceDtls">{{d.prodName}}</li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td>{{p.proformaInvoiceNo}}</td>
+                      <td>{{p.submissionDate | date}}</td>
+                      <td>
+                        <div>
+                          <ul type="none">
+                            <!-- <li *ngFor="let d of p.proformaInvoiceDtls">{{d.totalAmount | number}} MT</li> -->
+                            <li *ngFor="let d of p.proformaInvoiceDtls">
+                              <span *ngIf="d.noOfUnits">{{d.noOfUnits | number}} Unit</span>
+                              <br>
+                              <span *ngIf="d.totalAmount">{{d.totalAmount | number}} MT</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <ul type="none">
+                            <li *ngFor="let d of p.proformaInvoiceDtls">
+                              <div *ngIf="d.approvedAmount === null || undefined || '' ">
+                                <span>
+                                  --
+                                </span>
+                              </div>
+                              <div *ngIf="d.approvedAmount == 0 ">
+                                <span>
+                                  --
+                                </span>
+                              </div>
+                              <div *ngIf="d.approvedAmount">
+                                <span *ngIf="d.noOfUnits>0">{{d.approvedAmount}}
+                                  Unit</span>
+                                <span *ngIf="d.totalAmount>0">{{d.approvedAmount}}
+                                  MT</span>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <ul type="none">
+                            <li *ngFor="let d of p.proformaInvoiceDtls">
+                              <div *ngIf="d.approvedAmount === null || undefined || '' ">
+                                <span class="m-badge  m-badge--warning m-badge--wide">
+                                  Pending&nbsp;
+                                </span>
+                              </div>
+                              <div *ngIf="d.approvedAmount == 0 ">
+                                <span class="m-badge  m-badge--danger m-badge--wide">
+                                  Rejected&nbsp;
+                                </span>
+                              </div>
+                              <div *ngIf="d.approvedAmount">
+                                <span class="m-badge  m-badge--success m-badge--wide">
+                                  Approved
+                                </span>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td>{{p.countryOfOrigin}}</td>
+                      <td>
+                        <div>
+                          <ul type="none">
+                            <li *ngFor="let d of p.proformaInvoiceDtls">{{d.packSize}}</li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <ul type="none">
+                            <li *ngFor="let d of p.proformaInvoiceDtls">{{d.prodType}}</li>
+                          </ul>
+                        </div>
+                      </td>
+                      <td style="text-align: right;min-width: 100px;">
+                        <ul type="none">
+                          <li *ngFor="let d of p.proformaInvoiceDtls">
+                            <div *ngIf="p.currency === 'Dollar'">
+                              <span><i class="fas fa-dollar-sign fa-xs"></i> {{d.totalPrice | number}}</span>
+                            </div>
+                            <div *ngIf="p.currency === 'Pound'">
+                              <span><i class="fas fa-pound-sign fa-xs"></i> {{d.totalPrice | number}}</span>
+                            </div>
+                            <div *ngIf="p.currency === 'Euro'">
+                              <span><i class="fas fa-euro-sign fa-xs"></i> {{d.totalPrice | number}}</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </td>
+                      <td style="text-align: right;">
+                        <ul type="none">
+                          <li *ngFor="let d of p.proformaInvoiceDtls">
+                            Tk- {{d.totalPriceInBdt | number}}
+                          </li>
+                        </ul>
+                      </td>
+                      <td style="text-align: right;">
+                        <ul type="none">
+                          <li *ngFor="let d of p.proformaInvoiceDtls">
+                            <div *ngIf="d.approvalStatus=== null || undefined || ''">
+                              <span>
+                                --
+                              </span>
+                            </div>
+                            <div *ngIf="d.approvalStatus === false">
+                              <span> --</span>
+                            </div>
+                            <div *ngIf="d.approvalStatus === true">
+                              <span>Tk-
+                                <span
+                                  *ngIf="d.noOfUnits>0">{{((d.approvedAmount * d.totalPriceInBdt) / d.noOfUnits) | number: '1.0-0'}}</span>
+                                <span
+                                  *ngIf="d.totalAmount>0">{{((d.approvedAmount * d.totalPriceInBdt) / d.totalAmount) | number: '1.0-0'}}</span>
+                              </span>
+                            </div>
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #piInfoDetailModal>
+  <div class="modal-header">
+    <h3 class="modal-title pull-left"><strong>Proforma Invoice Info</strong></h3>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="padding: 20px 30px 20px 30px;" style="background-color: #ecf0f5;">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <span>
+                  <p><b>Application No:</b> {{proformaInfo.applicationNo}}</p>
+                </span>
+                <span>
+                  <p><b>PI No:</b> {{proformaInfo.proformaInvoiceNo}}</p>
+                </span>
+                <span>
+                  <p><b>Importer:</b> {{proformaInfo.importerInfo.orgName}},<small>
+                      {{proformaInfo.importerInfo.address}}</small></p>
+                </span>
+                <span>
+                  <p><b>Submission Date:</b> {{proformaInfo.submissionDate | date}}</p>
+                </span>
+              </div>
+              <div class="col-md-5">
+                <span>
+                  <p><b>Country of Origin:</b> {{proformaInfo.countryOfOrigin}}</p>
+                </span>
+                <span>
+                  <p><b>Currency:</b> {{proformaInfo.currency}}</p>
+                </span>
+                <span>
+                  <p><b>Port of Loading:</b> {{proformaInfo.portOfLoading}}</p>
+                </span>
+                <span>
+                  <p><b>Port of Entry:</b> {{proformaInfo.portOfEntry}}</p>
+                </span>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <span><b>PI Scan File: </b>
+                  <button class="btn btn-sm btn-embossed btn-success btn-grid-pdf"
+                    (click)="DownloadPiFile(proformaInfo.piScan)"><i
+                      class="fas fa-file-pdf fa-lg icon-pdf"></i></button>
+                </span>
+              </div>
+              <div class="col-md-5">
+                <span><b>Literature: </b>
+                  <button class="btn btn-sm btn-embossed btn-success btn-grid-pdf"
+                    (click)="DownloadLitFile(proformaInfo.litScan)"><i
+                      class="fas fa-file-pdf fa-lg icon-pdf"></i></button>
+                </span>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+            <div class="row" style="margin-top: 5px;">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <span><b>Test Doc:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+                  <button class="btn btn-sm btn-embossed btn-success btn-grid-pdf"
+                    (click)="DownloadTestFile(proformaInfo.testReport)"><i
+                      class="fas fa-file-pdf fa-lg icon-pdf"></i></button>
+                </span>
+              </div>
+              <div class="col-md-5">
+                <span><b>Other Doc: </b>
+                  <button class="btn btn-sm btn-embossed btn-success btn-grid-pdf"
+                    (click)="DownloadOtherFile(proformaInfo.otherDoc)"><i
+                      class="fas fa-file-pdf fa-lg icon-pdf"></i></button>
+                </span>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive" style="border: 1px solid #dfe4e7; width: 100%;">
+          <table class="table table-bordered table-hover table-striped">
+            <thead style="background-color: #3c8dbc;color:white;">
+              <tr>
+                <th scope="col">Product Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">H.S.Code</th>
+                <th scope="col">Manufacturer</th>
+                <th scope="col">Pack Size</th>
+                <th scope="col">No. of Units</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Amount (Ton)</th>
+                <th scope="col">Rate (BDT)</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Total Price(BDT)</th>
+                <th scope="col">Approved Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of proformaInfo.proformaInvoiceDtls">
+                <td>{{a.prodName}}</td>
+                <td>{{a.prodType}}</td>
+                <td>{{a.hsCode}}</td>
+                <td>{{a.manufacturer}}</td>
+                <td>{{a.packSize}}</td>
+                <td style="text-align: right;">{{a.noOfUnits | number}}</td>
+                <td style="text-align: right;">{{a.unitPrice}}</td>
+                <td style="text-align: right;">{{a.totalAmount | number}} MT</td>
+                <td style="text-align: right;">{{a.exchangeRate | number}}</td>
+                <td style="text-align: right;">{{a.totalPrice | number}}</td>
+                <td style="text-align: right;">{{a.totalPriceInBdt | number}}</td>
+                <td>
+                  <!-- {{a.approvedAmount === null || undefined || '' 
+                  ? "Pending" 
+                  : ( a.approvedAmount == 0 ? "Rejected" : a.approvedAmount+ " MT" )}} -->
+                  <span *ngIf="a.approvedAmount === null || undefined || ''">Pending</span>
+                  <span *ngIf="a.approvedAmount == 0 ">Rejected</span>
+                  <span *ngIf="a.noOfUnits>0 &&  a.approvedAmount!=null">{{a.approvedAmount+ " Unit" }}</span>
+                  <span *ngIf="a.totalAmount>0 && a.approvedAmount!=null">{{a.approvedAmount+ " MT" }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #piApprovalModal>
+  <div class="modal-header">
+    <h3 class="modal-title pull-left"><strong>Proforma Invoice Approval</strong></h3>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="destroyApprovalModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="padding: 20px 30px 20px 30px;" style="background-color: #ecf0f5;">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <span>
+                  <p><b>Application No:</b> {{proformaInfo.applicationNo}}</p>
+                </span>
+                <span>
+                  <p><b>PI No:</b> {{proformaInfo.proformaInvoiceNo}}</p>
+                </span>
+                <span>
+                  <p><b>Importer:</b> {{proformaInfo.importerInfo.orgName}},<small>
+                      {{proformaInfo.importerInfo.address}}</small></p>
+                </span>
+                <span>
+                  <p><b>Submission Date:</b> {{proformaInfo.submissionDate | date}}</p>
+                </span>
+              </div>
+              <div class="col-md-5">
+                <span>
+                  <p><b>Country of Origin:</b> {{proformaInfo.countryOfOrigin}}</p>
+                </span>
+                <span>
+                  <p><b>Currency:</b> {{proformaInfo.currency}}</p>
+                </span>
+                <span>
+                  <p><b>Port of Loading:</b> {{proformaInfo.portOfLoading}}</p>
+                </span>
+                <span>
+                  <p><b>Port of Entry:</b> {{proformaInfo.portOfEntry}}</p>
+                </span>
+
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <span><b>DLS License: </b>
+                  <button class="btn btn-sm btn-embossed btn-success btn-grid-pdf"
+                    (click)="DownloadPiFile(proformaInfo.piScan)"><i
+                      class="fas fa-file-pdf fa-lg icon-pdf"></i></button>
+                </span>
+              </div>
+              <div class="col-md-5">
+                <span><b>Literature: </b>
+                  <button class="btn btn-sm btn-embossed btn-success btn-grid-pdf"
+                    (click)="DownloadLitFile(proformaInfo.litScan)"><i
+                      class="fas fa-file-pdf fa-lg icon-pdf"></i></button>
+                </span>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+            <div class="row" style="margin-top: 5px;">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <span><b>Test Doc:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+                  <button class="btn btn-sm btn-embossed btn-success btn-grid-pdf"
+                    (click)="DownloadTestFile(proformaInfo.testReport)"><i
+                      class="fas fa-file-pdf fa-lg icon-pdf"></i></button>
+                </span>
+              </div>
+              <div class="col-md-5">
+                <span><b>Other Doc: </b>
+                  <button class="btn btn-sm btn-embossed btn-success btn-grid-pdf"
+                    (click)="DownloadOtherFile(proformaInfo.otherDoc)"><i
+                      class="fas fa-file-pdf fa-lg icon-pdf"></i></button>
+                </span>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive" style="border: 1px solid #dfe4e7; width: 100%;">
+          <table class="table table-bordered table-hover table-striped">
+            <thead style="background-color: #3c8dbc;color:white;">
+              <tr>
+                <th scope="col">Action</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Manufacturer</th>
+                <th scope="col">Pack Size</th>
+                <th scope="col"> Requested Units</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Requested Amount (Ton)</th>
+                <th scope="col">Approval Status</th>
+                <th scope="col">Approval Amount (Ton/Unit)</th>
+                <th scope="col">Remarks</th>
+                <th scope="col">PI Price(BDT)</th>
+                <th scope="col">Approval Price(BDT)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of proformaInfo.proformaInvoiceDtls">
+                <td>
+                  <button type="button"
+                    *ngIf="(a.approvalStatus === null || undefined || '') || a.approvalStatus === false"
+                    class="btn btn-sm btn-embossed btn-primary btn-pro-approval" (click)="approve(a)">Approve</button>
+                  <button type="button" *ngIf="a.approvalStatus"
+                    class="btn btn-sm btn-embossed btn-primary btn-pro-approval" (click)="approve(a)">Update
+                    Approve</button>
+                  <button *ngIf="a.approvalStatus === null || undefined || '' " type="button"
+                    class="btn btn-sm btn-embossed btn-danger btn-pro-approval"
+                    (click)="reject(a)">&nbsp;&nbsp;Reject&nbsp;&nbsp;</button>
+                  <button *ngIf="a.approvalStatus" type="button"
+                    class="btn btn-sm btn-embossed btn-danger btn-pro-approval" (click)="reject(a)">Cancel
+                    Approve&nbsp;</button>
+                </td>
+                <td>{{a.prodName}}</td>
+                <td>{{a.manufacturer}}</td>
+                <td>{{a.packSize}}</td>
+                <td style="text-align: right;">{{a.noOfUnits}}</td>
+                <td style="text-align: right;">{{a.unitPrice}}</td>
+                <td style="text-align: right;">{{a.totalAmount}} MT</td>
+                <td style="text-align: right;">
+                  <div *ngIf="a.approvalStatus === null || undefined || '' ">
+                    <span class="m-badge  m-badge--warning m-badge--wide">
+                      Pending
+                    </span>
+                  </div>
+                  <div *ngIf="a.approvalStatus === false ">
+                    <span class="m-badge  m-badge--danger m-badge--wide">
+                      Rejected
+                    </span>
+                  </div>
+                  <div *ngIf="a.approvalStatus">
+                    <span class="m-badge  m-badge--success m-badge--wide">
+                      Approved
+                    </span>
+                  </div>
+
+                </td>
+                <td>
+                  <input type="text" class="form-control" [(ngModel)]="a.approvedAmount"
+                    (input)="apvAmtValidate(a.approvedAmount,a.noOfUnits,a.totalAmount)" />
+                  <div class="invalid-feedback" *ngIf="apvAmtValidationErrorMsg">Approve amount exceeds Requested
+                    Amount-
+                    <span *ngIf="a.noOfUnits>0"> {{a.noOfUnits}}</span>
+                    <span *ngIf="a.totalAmount>0"> {{a.totalAmount}}</span>
+                  </div>
+
+                </td>
+                <td>
+                  <input type="text" class="form-control" [(ngModel)]="a.remarks" />
+                </td>
+                <td style="text-align: right;">{{a.totalPriceInBdt | number}}</td>
+                <td style="text-align: right;">
+                  <span
+                    *ngIf="a.noOfUnits>0">{{((a.approvedAmount * a.totalPriceInBdt) / a.noOfUnits) | number: '1.0-0'}}</span>
+                  <span
+                    *ngIf="a.totalAmount>0">{{((a.approvedAmount * a.totalPriceInBdt) / a.totalAmount) | number: '1.0-0'}}</span>
+
+                  <!-- <span>Tk-
+                    </span> -->
+                  <!-- {{((a.approvedAmount * a.totalPriceInBdt) / a.totalAmount) | number: '1.0-0'}} -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '4px', fullScreenBackdrop:true}"></ngx-loading>

@@ -1,0 +1,225 @@
+<div class="content">
+    <div class="m-subheader">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto col-md-6">
+                <h3 class="m-subheader__title m-subheader__title--separator">
+                    <span>Importer Management</span>
+                </h3>
+            </div>
+            <div class="col-md-6 text-right">
+                <!-- <button (click)="exportToExcel()" class="btn btn-outline-success"><i class="fa fa-file-excel-o"></i>
+                    ExportToExcel</button> -->
+                    <button (click)="createImporter()" class="btn btn-primary blue"><i class="fa fa-plus"></i>
+                        Create New Importer</button>
+                <button (click)="viewImporterReport(true)" class="btn btn-info"><i class="fa fa-eye"
+                        aria-hidden="true"></i>
+                    View All Importer Report</button>
+            </div>
+        </div>
+    </div>
+    <div class="m-content">
+        <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__body">
+                <form class="horizontal-form" autocomplete="off">
+                    <div class="m-form m-form--label-align-right">
+                        <div class="row align-items-center m--margin-bottom-10">
+                            <div class="col-md-12">
+                                <div class="form-group m-form__group align-items-center">
+                                    <div class="input-group">
+                                        <input name="filterText" autoFocus class="form-control m-input" type="text"
+                                            [(ngModel)]="filterText">
+                                        <span class="input-group-btn">
+                                            <button (click)="getImporters()" class="btn btn-primary" type="submit"><i
+                                                    class="flaticon-search-1"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="col-md-12">
+                        <div class="primeng-datatable-container">
+                            <p-table #dataTable (onLazyLoad)="getImporters($event)" [value]="primengTableHelper.records"
+                                rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false"
+                                [lazy]="true" [scrollable]="true" ScrollWidth="100%"
+                                [responsive]="primengTableHelper.isResponsive"
+                                [resizableColumns]="primengTableHelper.resizableColumns">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 110px">
+                                            Actions</th>
+                                        <th style="width: 130px" pSortableColumn="orgName">
+                                            Organization
+                                            <p-sortIcon field="orgName"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 160px" pSortableColumn="contactName">
+                                            Contact Name
+                                            <p-sortIcon field="contactName"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px">
+                                            Contact Number
+                                        </th>
+                                        <th style="width: 150px">
+                                            Position
+                                        </th>
+                                        <th style="width: 180px">
+                                            Email
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="username">
+                                            Username
+                                            <p-sortIcon field="username"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px">
+                                            Division
+                                        </th>
+                                        <th style="width: 150px">
+                                            District
+                                        </th>
+                                        <th style="width: 150px">
+                                            Upazila
+                                        </th>
+                                        <th style="width: 150px">
+                                            Address
+                                        </th>
+                                        <th style="width: 150px">
+                                            DLS License Type
+                                        </th>
+                                        <th style="width: 150px">
+                                            DLS License No.
+                                        </th>
+                                        <th style="width: 150px">
+                                            NID No.
+                                        </th>
+                                        <th style="width: 100px">
+                                            DLS License
+                                        </th>
+                                        <th style="width: 100px">
+                                            NID
+                                        </th>
+                                        <th style="width: 100px">
+                                            IRC
+                                        </th>
+
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-record="$implicit">
+                                    <tr>
+                                        <td style="width: 110px">
+                                            <div class="btn-group dropdown" dropdown container="body">
+                                                <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                    <i class="fa fa-cog"></i><span class="caret"></span> Actions
+                                                </button>
+                                                <ul class="dropdown-menu" *dropdownMenu>
+                                                    <li>
+                                                        <a href="javascript:;"
+                                                            (click)="viewImporterModal.show(record)">View</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;"
+                                                            (click)="deleteImporter(record)">Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        <td style="width:130px">
+                                            <span class="ui-column-title"> Organization</span>
+                                            {{record.orgName}}
+                                        </td>
+                                        <td style="width:160px">
+                                            <span class="ui-column-title"> Contact Name</span>
+                                            {{record.contactName}}
+                                        </td>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title"> Contact Number</span>
+                                            {{record.contactNo}}
+                                        </td>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title"> Position</span>
+                                            {{record.position}}
+                                        </td>
+                                        <td style="width:180px">
+                                            <span class="ui-column-title"> Email</span>
+                                            {{record.email}}
+                                        </td>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title"> Username</span>
+                                            {{record.username}}
+                                        </td>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title"> Division</span>
+                                            {{record.division}}
+                                        </td>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title"> District</span>
+                                            {{record.district}}
+                                        </td>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title"> Upazila</span>
+                                            {{record.upazila}}
+                                        </td>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title"> Address</span>
+                                            {{record.address}}
+                                        </td>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title"> DLS License Type</span>
+                                            {{record.dlsLicenseType}}
+                                        </td>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title"> DLS License No.</span>
+                                            {{record.dlsLicenseNo}}
+                                        </td>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title">NID No.</span>
+                                            {{record.nidNo}}
+                                        </td>
+                                        <td style="width:100px">
+                                            <span class="ui-column-title"> DLS License</span>
+                                            <button class="btn btn-sm btn-embossed btn-primary btn-grid-pdf"
+                                                (click)="DownloadDlsLicenseFile(record.dlsLicenseScan)"><i
+                                                    class="fas fa-file-pdf fa-lg icon-pdf"></i></button>
+                                            <!-- {{record.dlsLicenseScan}} -->
+                                        </td>
+                                        <td style="width:100px">
+                                            <span class="ui-column-title">NID</span>
+                                            <button class="btn btn-sm btn-embossed btn-primary btn-grid-pdf"
+                                                (click)="DownloadNidFile(record.nidScan)"><i
+                                                    class="fas fa-file-pdf fa-lg icon-pdf"></i></button>
+                                            <!-- {{record.nidScan}} -->
+                                        </td>
+                                        <td style="width:100px">
+                                            <span class="ui-column-title"> IRC</span>
+                                            <button class="btn btn-sm btn-embossed btn-primary btn-grid-pdf"
+                                                (click)="DownloadIrcFile(record.ircScan)"><i
+                                                    class="fas fa-file-pdf fa-lg icon-pdf"></i></button>
+                                            <!-- {{record.ircScan}} -->
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                                NoData
+                            </div>
+                            <div class="primeng-paging-container">
+                                <p-paginator rows="{{primengTableHelper.defaultRecordsCountPerPage}}" #paginator
+                                    (onPageChange)="getImporters($event)"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                                </p-paginator>
+                                <span class="total-records-count">
+                                    <b>Total: </b> {{ primengTableHelper.totalRecordsCount}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <viewImporterModal #viewImporterModal></viewImporterModal>
+</div>

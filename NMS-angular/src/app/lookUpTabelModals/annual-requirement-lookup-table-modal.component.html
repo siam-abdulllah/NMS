@@ -1,0 +1,120 @@
+<div class="content">
+  <div bsModal #annualReqsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="annualReqsModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header" style="background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #289e68), color-stop(1, #f9fafc));color: black;">
+          <h4 class="modal-title">
+            <span>Annual Requirements</span>
+          </h4>
+          <button type="button" class="close" (click)="close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="content">
+          <div class="m-portlet m-portlet--mobile">
+            <div class="m-portlet__body">
+              <form class="horizontal-form" autocomplete="off">
+                <div class="m-form m-form--label-align-right">
+                  <div class="row align-items-center m--margin-bottom-10">
+                    <div class="col-md-12">
+                      <div class="form-group m-form__group align-items-center">
+                        <div class="input-group">
+                          <input [(ngModel)]="filterText" name="filterText" autoFocus class="form-control m-input"
+                            type="text">
+                          <span class="input-group-btn">
+                            <button (click)="getAll()" class="btn btn-primary" type="submit"><i
+                                class="flaticon-search-1"></i></button>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+              <div class="row">
+                <!--<Primeng-Datatable-Start>-->
+                <div class="col-md-12">
+                  <div class="primeng-datatable-container" style="border: 1px solid #bed2c9; width: 100%;">
+                    <p-table #dataTable (onLazyLoad)="getAll($event)" [value]="primengTableHelper.records" rows="5"
+                      [paginator]="false" [lazy]="true" [scrollable]="true" ScrollWidth="100%"
+                      [responsive]="primengTableHelper.isResponsive"
+                      [resizableColumns]="primengTableHelper.resizableColumns" class="table table-bordered table-responsive table-hover table-striped">
+                      <ng-template pTemplate="header">
+                        <tr style=" font-size: 12px;">
+                          <th>Actions</th>
+                          <th  style="display: none;">Id</th>
+                          <th >Annual<br>Req<br>No</th>
+                          <th >Importer</th>
+                          <th >Submission<br>Date</th>
+                          <th  style="overflow: hidden;">Products</th>
+                          <th  style="overflow: hidden;">Pack Size</th>
+                          <!-- <th  style="width: 20%;overflow: hidden;">Countries</th>
+                                                  <th  style="width: 0%;display: none;;">Manufactures</th> -->
+                          <!-- <th  style="width: 5%; display: none;">Currencies</th> -->
+                          <th >Total<br>Amounts</th>
+                          <th >Total<br>Units <br> (Kg/Ltr/Unit)</th>
+                          <!-- <th  style="width: 12%;display: none;">Total<br>Prices</th>
+                                                  <th  style="width: 10%;">Total<br>Price(BDT)</th> -->
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-a="$implicit">
+                        <tr style=" font-size: 12px;">
+                          <td><button class="btn btn-sm btn-success" (click)="selectAnnualReq(a)">Details</button> </td>
+                          <td style="display: none;">{{a.id}}</td>
+                          <td>{{a.annualReqNo}}</td>
+                          <!-- <td style="display: none;">{{a.importerId}}</td> -->
+                          <td>{{a.importerId}}</td>
+                          <td>{{a.submissionDate| date}}</td>
+                          <td>
+                            <ul type="none" *ngFor="let d of a.annualRequirementDtls">
+                              <li>{{d.prodName}}</li>
+                            </ul>
+                          </td>
+                          <td>
+                            <ul type="none" *ngFor="let d of a.annualRequirementDtls">
+                              <li>{{d.packSize}}</li>
+                            </ul>
+                          </td>
+                          <td style="text-align: right;">
+                            <ul type="none" *ngFor="let d of a.annualRequirementDtls">
+                              <li>{{d.totalAmount}} MT</li>
+                            </ul>
+                          </td>
+                          <td style="text-align: right;">
+                            <ul type="none" *ngFor="let d of a.annualRequirementDtls">
+                              <li>{{d.tentativeUnits}}</li>
+                            </ul>
+                          </td>
+                        </tr>
+                      </ng-template>
+                    </p-table>
+                    <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                      NoData
+                    </div>
+                    <div class="primeng-paging-container">
+                      <p-paginator rows="{{primengTableHelper.defaultRecordsCountPerPage}}" #paginator
+                        styleClass="role-lookup-table-paginator" (onPageChange)="getAll($event)"
+                        [totalRecords]="primengTableHelper.totalRecordsCount"
+                        [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                      </p-paginator>
+                      <span class="total-records-count">
+                        <b>Total: </b> {{primengTableHelper.totalRecordsCount}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button  type="button" class="btn btn-primary blue" (click)="close()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <app-annual-requirement></app-annual-requirement> -->
+</div>

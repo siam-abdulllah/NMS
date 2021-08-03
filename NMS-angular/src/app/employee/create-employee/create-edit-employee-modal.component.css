@@ -1,0 +1,7 @@
+
+.is-invalid {
+    border: 1px solid red !important;
+}
+.invalid-feedback{
+    font-weight: 600;
+}

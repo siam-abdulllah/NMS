@@ -1,0 +1,65 @@
+.btn-add-product{
+    font-weight: bolder !important;
+}
+form{
+    width: 100%;
+    padding: 2% 1% 1% 1%;
+}
+fieldset.scheduler-border {
+    border: 1px solid #45A845 !important;
+    padding: 0 5px 5px 5px !important;
+    margin: 0px 0 0 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+        margin-bottom: 0;
+    }
+    .form-control{
+        background-image: none;
+        border: 1px solid green !important;
+        border-radius: none;
+    }
+    .is-invalid {
+        border: 1px solid red !important;
+    }
+    .invalid-feedback{
+        font-weight: 600;
+    }
+    .table>thead>tr>th{
+        vertical-align: top !important;
+    }
+
+    ul {
+        padding-left: 5px !important;
+        margin-bottom: 1px !important;
+        border-bottom: 1px solid lightgrey !important;
+    }
+    .icon-action
+    {
+       margin-right: -2px; ;
+   }
+ .btn-grid-action{
+     margin-left:22% !important;
+ }
+ .table>thead>tr>th{
+    vertical-align: top !important;
+    border: 1px solid #ffffff;
+}
+.table>tbody>tr>td{
+    vertical-align: middle !important;
+    border: 1px solid #c8c8c8;
+}
+.table>thead>tr{
+    border-bottom: 2px solid #c8c8c8;
+}
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn{
+    opacity: .50 !important;
+}

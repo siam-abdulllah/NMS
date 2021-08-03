@@ -1,0 +1,200 @@
+<div class="content">
+  <div class="row">
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title"><strong>Profile</strong></h3>
+              <button  class="btn btn-primary blue" style="float: right;margin-left: 10px;" (click)="changePassword()"><i class="fa fa-edit"></i>
+                Change Password</button>
+        <button  class="btn btn-primary blue" style="float: right;" (click)="editImporterInfo()"><i class="fa fa-edit"></i>
+            Edit Importer Info</button>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10">
+                        <h3 style="color: green; font-weight: bold;">{{importerInfo.orgName}}</h3>
+                    </div>
+                </div>
+                <div class="row" >
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-sitemap" aria-hidden="true"></i>
+                                        Organization Name
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.orgName}}</div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-server" aria-hidden="true"></i>
+                                        Contact Name
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.contactName}}</div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-phone-square" aria-hidden="true"></i>
+                                        Contact Number
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.contactNo}}</div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                        Position
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.position}}</div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        Username
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.userLogin.username}}</div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        Email
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.email}}</div>
+                        </div>
+
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        Division
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.division}}</div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        District
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.district}}</div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        Upazila
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.upazila}}</div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        Address
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.address}}</div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-file" aria-hidden="true"></i>
+                                        DLS License Type
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.dlsLicenseType}}</div>
+                        </div>
+                        <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-id-card" aria-hidden="true"></i>
+                                        DLS License No.
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.dlsLicenseNo}}</div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-md-2"></div>
+                            <div class="col-md-3">
+                                <h5>
+                                    <b>
+                                        <i class="fa fa-address-card" aria-hidden="true"></i>
+                                        NID No.
+                                    </b>
+                                </h5>
+                            </div>
+                            <div class="col-md-1"><b>:</b></div>
+                            <div class="col-md-6">{{importerInfo.nidNo}}</div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

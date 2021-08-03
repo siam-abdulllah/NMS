@@ -1,0 +1,147 @@
+<div class="content">
+    <div class="row">
+      <div class="col-md-12">
+          <div class="box box-success">
+              <div class="box-header with-border">
+                <h3 class="box-title"><strong>Edit Info</strong></h3>
+               <button type="button" style="float: right;margin-right: 100px;" class="btn btn-embossed btn-primary blue" (click)="backToImporterInfo()"><i class="fas fa-backward"></i>Back to Importer Info</button>
+              </div>
+              <div class="box-body">
+                 <div class="row">
+                   <div class="col-md-12">
+                      <form [formGroup]="editInfoForm" (submit)="updateInfo()">
+                         <div class="row">
+                           <div class="col-md-1"></div>
+                           <div class="col-md-10">
+                              <div class="form-group">
+                                  <label for="contact-person">Contact Person<span style="color:red;">*</span></label>
+                                 
+                                  <input type="text" class="form-control" id="contact-person" 
+                                  [ngClass]="{'is-invalid': editInfoForm.get('contactName').errors && editInfoForm.get('contactName').touched}" 
+                                  formControlName= "contactName">
+                                  <div class="invalid-feedback" *ngIf="editInfoForm.get('contactName').hasError('required')
+                                  && editInfoForm.get('contactName').touched">Contact person required</div>
+                                  <div class="invalid-feedback" *ngIf="editInfoForm.get('contactName').hasError('maxlength')
+                                     && editInfoForm.get('contactName').touched"> Contact person can be maximum 50 Character long</div>                 
+                               </div>
+                           </div>
+                         </div>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label for="position">Position<span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="position"
+                                    [ngClass]="{'is-invalid': editInfoForm.get('position').errors && editInfoForm.get('position').touched}" 
+                                     formControlName= "position">
+                                     <div class="invalid-feedback" *ngIf="editInfoForm.get('position').hasError('required')
+                                     && editInfoForm.get('position').touched">Position required</div>
+                                     <div class="invalid-feedback" *ngIf="editInfoForm.get('position').hasError('maxlength')
+                                        && editInfoForm.get('position').touched"> Position can be maximum 20 Character long</div> 
+                                </div>
+                             </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-1"></div>
+                           <div class="col-md-10">
+                                <div class="form-group">
+                                    <label for="contact-no">Mobile No.<span style="color:red;">*</span></label>
+                                    
+                                    <input type="text" class="form-control" id="contact-no" 
+                                   [ngClass]="{'is-invalid': editInfoForm.get('contactNo').errors && editInfoForm.get('contactNo').touched}" 
+                                   formControlName= "contactNo">
+                                    <div class="invalid-feedback" *ngIf="editInfoForm.get('contactNo').hasError('required')
+                                    && editInfoForm.get('contactNo').touched">Mobile No. required</div>
+                                    <div class="invalid-feedback" *ngIf="editInfoForm.get('contactNo').hasError('maxlength')
+                                       && editInfoForm.get('contactNo').touched">Mobile No. can be maximum 20 Character long</div>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-1"></div>
+                           <div class="col-md-10">
+                                <div class="form-group">
+                                    <label for="email">Email<span style="color:red;">*</span></label>
+                                  
+                                    <input type="text" class="form-control" id="email" 
+                                    [ngClass]="{'is-invalid': editInfoForm.get('email').errors && editInfoForm.get('email').touched}" 
+                                   formControlName= "email">
+                                    <div class="invalid-feedback" *ngIf="editInfoForm.get('email').hasError('required')
+                                    && editInfoForm.get('email').touched">Email No. required</div>
+                                    <div class="invalid-feedback" *ngIf="editInfoForm.get('email').hasError('maxlength')
+                                       && editInfoForm.get('email').touched">Email can be maximum 50 Character long</div>
+                                       <div class="invalid-feedback" *ngIf="editInfoForm.get('email').hasError('email')
+                                       && editInfoForm.get('email').touched">Invalid email format</div>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-1"></div>
+                           <div class="col-md-10">
+                                <div class="form-group">
+                                    <label for="user-name">Username <span style="color:red;">*</span></label>
+                                   
+                                    <input type="text" class="form-control" id="user-name" 
+                                    [ngClass]="{'is-invalid': editInfoForm.get('username').errors && editInfoForm.get('username').touched}" 
+                                     formControlName= "username" autocomplete="off">
+                                    <div class="invalid-feedback" *ngIf="editInfoForm.get('username').hasError('required')
+                                    && editInfoForm.get('username').touched">Username required</div>
+                                    <div class="invalid-feedback" *ngIf="editInfoForm.get('username').hasError('maxlength')
+                                    && editInfoForm.get('username').touched">Username can be maximum 20 Character long</div>
+                                    <div class="invalid-feedback" *ngIf="editInfoForm.get('username').hasError('pattern')
+                                    && editInfoForm.get('username').touched && !editInfoForm.get('username').hasError('maxlength')">Username must have atleast one character</div>
+                                </div>
+                             </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-1"></div>
+                           <div class="col-md-10">
+                                <div class="form-group">
+                                    <label for="nid-no">NID No<span style="color:red;">*</span></label>
+                                    
+                                  <input type="text" class="form-control" id="nid-no" 
+                                  [ngClass]="{'is-invalid': editInfoForm.get('nidNo').errors && editInfoForm.get('nidNo').touched}" 
+                                  formControlName= "nidNo">
+                                  <div class="invalid-feedback" *ngIf="editInfoForm.get('nidNo').hasError('required')
+                                 && editInfoForm.get('nidNo').touched">NID No. required</div>
+                                 <div class="invalid-feedback" *ngIf="editInfoForm.get('nidNo').hasError('maxlength')
+                                 && editInfoForm.get('nidNo').touched">NID No can be maximum 20 Character long</div>
+                               </div>
+                               </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-1"></div>
+                           <div class="col-md-10">
+                                <div class="form-group">
+                                    <label for="nid-scan-copy">NID Scan Copy</label>
+                                    
+                                     <input type="file" class="form-control" id="nid-scan-copy" (change)="onSelectedNidFile($event)"
+                                     placeholder="NID scan copy"
+                                    [ngClass]="{'is-invalid': editInfoForm.get('nidScan').errors && editInfoForm.get('nidScan').touched}" 
+                                    formControlName= "nidScan">
+                                  <small class="help-block" style="color: #888889">File size should be(Max 1MB) in PDF Format </small>
+                                   <div class="invalid-feedback" *ngIf="editInfoForm.get('nidScan').hasError('required')
+                                   && editInfoForm.get('nidScan').touched">NID scan copy required</div>
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-1"></div>
+                           <div class="col-md-10">
+                              <div class="form-group">
+                               <button class="form-control btn-success" [ngClass]="{'btn-registration-disabled': editInfoForm.invalid}" 
+                               [disabled]="editInfoForm.invalid"
+                               style="padding: 0; color: white;font-size:large; font-weight: 500;">Update Info</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                   </div>
+                 </div>
+  
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '4px', fullScreenBackdrop:true}"></ngx-loading>

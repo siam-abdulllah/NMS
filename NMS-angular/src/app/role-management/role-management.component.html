@@ -1,0 +1,33 @@
+<div class="content">
+    <div class="m-subheader">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto col-md-6">
+                <h3 class="m-subheader__title m-subheader__title--separator">
+                    <span>Role Management</span>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="m-content">
+                <div class="m-portlet m-portlet--mobile">
+                    <div class="m-portlet__body">
+                        <tabset class="tab-container tabbable-line tab-dashboard">
+                            <tab heading="Roles" customClass="m-tabs__item">
+                               <Roles></Roles>
+                            </tab>
+                            <tab heading="Assign Roles" customClass="m-tabs__item">
+                                <UserRoleAssign></UserRoleAssign>
+                                <!-- <salesCampaignProspects *ngIf="salesCampaignId" [salesCampaignIdFilter]="salesCampaignId"
+                            [isContact]="true"></salesCampaignProspects> -->
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

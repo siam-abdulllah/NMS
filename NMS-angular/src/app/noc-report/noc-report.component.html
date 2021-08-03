@@ -1,0 +1,753 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><strong>NOC Certificate Generate Form</strong></h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form #nocForm="ngForm" novalidate novalidate autocomplete="off">
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-3" style="margin-top: 5px;">
+                                        <label for="from-date" class="control-label date-label">NOC Certificate
+                                            Type</label>
+                                        <span style="color:red;"> *</span>
+                                    </div>
+                                    <div class="col-md-4" style="margin-left: 0px; margin-left: -38px;">
+                                        <div class="form-group">
+                                            <ng-select [items]="nocTypes" bindLabel="name" bindValue="id" placeholder="Select NOC Type" [(ngModel)]="selectedNocType" [ngModelOptions]="{standalone: true}">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="margin-top: 5px;">
+                                        <label for="from-date" class="control-label date-label">NOC Cert.
+                                            Date</label>
+                                    </div>
+                                    <div class="col-md-2" style="margin-left: 0px; margin-left: -38px;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" (bsValueChange)="changeNocDate($event)" id="nocCertDate" placeholder="Printing Date" [bsValue]="bsValue" name="nocCertDate" [(ngModel)]="nocCertDate" bsDatepicker [bsConfig]="bsConfig" readonly>
+                                        </div>
+
+                                    </div>
+                                    <!-- value {{selectedNocType | json}} -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1" style="margin-top: 5px;">
+                                        <label for="from-date" class="control-label date-label">From</label>
+                                        <span style="color:red;"> *</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="from-date" placeholder="From Date" name="fromDate" [(ngModel)]="fromDate" bsDatepicker [bsConfig]="bsConfig" readonly #FromDate="ngModel" [ngClass]="{ 'is-invalid': FromDate.touched && FromDate.invalid }" required>
+                                            <div *ngIf="FromDate.touched && FromDate.invalid" class="invalid-feedback">
+                                                <div *ngIf="FromDate.errors.required">From Date is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="margin-top: 5px;">
+                                        <label for="to-date" class="control-label date-label">To</label>
+                                        <span style="color:red;">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="to-date" placeholder="To Date" [bsValue]="bsValue" name="toDate" [(ngModel)]="toDate" bsDatepicker [bsConfig]="bsConfig" readonly #ToDate="ngModel" [ngClass]="{ 'is-invalid': ToDate.touched && ToDate.invalid }"
+                                                required>
+                                            <div *ngIf="ToDate.touched && ToDate.invalid" class="invalid-feedback">
+                                                <div *ngIf="ToDate.errors.required">To Date is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="submit" class="btn btn-embossed btn-primary" (click)="openSelectProformaInvoiceModal(selectedNocType)" [disabled]="!nocForm.valid">Search</button>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="button" class="btn btn-embossed btn-danger" (click)="resetDateRange()">Reset</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form #cForm="ngForm" novalidate novalidate autocomplete="off">
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1">
+                                        <label for="piNo." class="control-label">PI No.</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="piNo." [(ngModel)]="proformaInvoiceNo" name="piNo" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="text-align:center;">
+                                        <button type="submit" class="btn btn-info" (click)="captureSc()" [disabled]="!cForm.valid || !viewCertificate ">
+                                            View Certificate</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1">
+                                        <label for="letterNo." class="control-label">Letter No.(পত্র নং-)</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div style="display: flex; justify-content: space-between;">
+                                                <input type="text" class="form-control" id="letterNoFixed." lang="bn" xml:lang="bn" [(ngModel)]="letterNoFixed" name="letterNoFixed" readonly>
+                                                <input type="text" class="form-control" id="letterNoInput" lang="bn" xml:lang="bn" name="letterNoInput" [(ngModel)]="letterNoInput" #LetterNo="ngModel" [ngClass]="{ 'is-invalid': LetterNo.touched && LetterNo.invalid }" required>
+                                            </div>
+                                            <div *ngIf="LetterNo.touched && LetterNo.invalid" class="invalid-feedback">
+                                                <div *ngIf="LetterNo.errors.required">Letter No. is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1">
+                                        <label for="toAddress." class="control-label">To (প্রাপক )</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <textarea type="text" class="form-control" id="toAddress." [(ngModel)]="toAddress" name="toAddress" readonly rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1">
+                                        <label for="sub" class="control-label date-label">Subject (বিষয় ) <span
+                                                style="color:red;">*</span></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <textarea type="text" class="form-control" id="subject" [(ngModel)]="subject" name="subject" rows="2" #subjectValidation="ngModel" [ngClass]="{ 'is-invalid': subjectValidation.touched && subjectValidation.invalid }" required>
+                                            </textarea>
+                                            <div *ngIf="subjectValidation.touched && subjectValidation.invalid" class="invalid-feedback">
+                                                <div *ngIf="subjectValidation.errors.required">Subject is required
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1">
+                                        <label for="submissionDate" class="control-label ">Submission Date </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="submissionDate" [(ngModel)]="proformaSubmissionDate" name="submissionDate" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1">
+                                        <label for="portOfLoading" class="control-label">Port of Loading</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="portOfLoading" [(ngModel)]="portOfLoading" name="portOfLoading" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-1">
+                                        <label for="onulipiPort" class="control-label">অনুলিপি পোর্ট <span
+                                                style="color:red;">*</span></label>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <ng-multiselect-dropdown [placeholder]="'অনুলিপি পোর্ট'"
+                                                [data]="dropdownList" [(ngModel)]="selectedItems" name="onulipi"
+                                                [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                                                (onSelectAll)="onSelectAll($event)">
+                                            </ng-multiselect-dropdown>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </form>
+                            <br>
+                            <!-- table data -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" style="border: 1px solid #dfe4e7; width: 100%;">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 150px">
+                                                        Description of Products
+                                                    </th>
+                                                    <th style="width: 150px">
+                                                        PI No. & Date
+                                                    </th>
+                                                    <th style="width: 150px; text-align:center;">
+                                                        Country of Origin
+                                                    </th>
+                                                    <th style="width: 150px">
+                                                        Name & Address of Exporter
+                                                    </th>
+                                                    <th style="width: 150px">
+                                                        Pack Size
+                                                    </th>
+                                                    <th style="width: 120px; text-align:right;">
+                                                        Amount
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width:150px">
+                                                        <p *ngFor="let d of proformaInvoiceDtls">{{d.prodName}} &nbsp; {{d.prodType}}</p>
+                                                        <br>
+                                                    </td>
+                                                    <td style="width:150px">
+                                                        PI- {{proformaInvoiceNo}}
+                                                        <br> Dated-{{proformaDate}}
+                                                    </td>
+                                                    <td style="width:150px; text-align:center;">
+                                                        {{countryOfOrigin}}
+                                                    </td>
+                                                    <td style="width:150px">
+                                                        <ul type="none" style="padding-left:5px;">
+                                                            <li *ngFor="let d of proformaInvoiceDtls">
+                                                                {{d.manufacturer}}
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td style="width:150px">
+                                                        <p *ngFor="let d of proformaInvoiceDtls">{{d.packSize}}</p>
+                                                        <br>
+                                                    </td>
+                                                    <td style="width:120px; text-align:right;">
+                                                        <p *ngFor="let d of proformaInvoiceDtls">
+                                                            <span *ngIf="d.noOfUnits>0">{{d.approvedAmount}}
+                                                                Unit
+                                                                <!-- <img style="height: 20px; width: 20px;"   src="../../assets/img/plus-minus.jpg"/> -->
+                                                                <!-- <img style="height: 16px; width: 16px;"   src="https://img.icons8.com/ios/50/000000/plus-minus.png"/>
+                                                                10% -->
+                                                            </span>
+                                                            <span *ngIf="d.totalAmount>0">{{d.approvedAmount}}
+                                                                MT 
+                                                                <!-- <img style="height: 16px; width: 16px;"  src="https://img.icons8.com/ios/50/000000/plus-minus.png"/>
+                                                                10% -->
+                                                            </span>
+                                                            <!-- <span *ngIf="d.approvedAmount zero">{{d.approvedAmount}}
+                                                                MT</span>
+                                                            <ng-template #zero>
+                                                                0 MT
+                                                            </ng-template> -->
+                                                        </p>
+                                                        <br>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- table data end -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal area -->
+<ng-template #createOrEditModal>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">
+                <span>Pick Proforma Invoice</span>
+            </h4>
+            <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row" style="margin: 5px 0px 5px 0px">
+                <div class="col-md-1"></div>
+                <div class="col-md-9">
+                    <input name="filterText" class="form-control m-input" type="text" [(ngModel)]="filterText" placeholder="Search..">
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-embossed btn-danger" (click)="resetFilter()">Reset</button>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+
+            <div class="row">
+                <!--<Primeng-Datatable-Start>-->
+                <div class="col-md-12">
+                    <div class="table-responsive" style="border: 1px solid #dfe4e7; width: 100%;">
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px">Actions</th>
+                                    <th style="width: 30px">
+                                        PI No.
+                                    </th>
+                                    <th style="width: 35px">
+                                        Submission Date
+                                    </th>
+                                    <th style="width: 35px">
+                                        Importer Name
+                                    </th>
+                                    <th style="width: 35px">
+                                        Products
+                                    </th>
+                                    <th style="width: 35px">
+                                        Port Of Entry
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let record of records | paginate: { itemsPerPage:5, currentPage: p} | filter: filterText">
+                                    <td style="width: 10px">
+                                        <div class="btn-group dropdown" normalizePosition>
+                                            <button class="btn btn-sm btn-primary" type="button" (click)="setAndSave(record)">
+                                                Select
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td style="width:30px">
+                                        {{record.proformaInvoiceNo}}
+                                    </td>
+                                    <td style="width:35px">
+                                        {{record.submissionDate | date}}
+                                    </td>
+                                    <td style="width:35px">
+                                        {{record.importerInfo.orgName}}
+                                    </td>
+                                    <td style="width:35px">
+                                        <p *ngFor="let d of record.proformaInvoiceDtls">{{d.prodName}}</p>
+                                        <br>
+                                    </td>
+                                    <td style="width:35px">
+                                        {{record.portOfEntry}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<!-- <div class="content"  > -->
+<div class="row" id="content" style="margin-left: auto;margin-right: auto; width: 850px;display: none;">
+    <style>
+        * {
+            font-family: 'nikosh', 'arial', sans-serif;
+        }
+    </style>
+    <div class="col-md-12" style="padding-left: 20px;padding-right: 20px;">
+        <div class="row" style="text-align: center">
+            <div class="col-md-12" style="text-align: right; padding-right: 125px;"><b>NOC NO.
+                </b><span>--------------------------</span></div>
+        </div>
+        <div class="row" style="margin-left: 5px;margin-top: 10px;margin-bottom: 10px;">
+            <!-- <div style="float: left;">
+                    <img style="height: 50px; width: 50px;" src="../../../assets/img/logo/logo.png" alt="DLS Logo">
+                </div> -->
+
+            <!-- <img style="padding-left: 100px; height: 100px; width: 500px;" src="../../assets/img/ReportHeader.png" alt="Header"> -->
+            <div style="text-align: center;">
+                <img style="height: 50px;width: 50px;float: left;margin-left: 180px;;" src="../../../assets/img/logo/govt-logo.png" alt="DLS Logo">
+                <img style="height: 50px; width: 50px; float: right;margin-right: 180px;" src="../../../assets/img/logo/logo.png" alt="DLS Logo"> গণপ্রজাতন্ত্রী বাংলাদেশ সরকার
+                <br> প্রাণিসম্পদ অধিদপ্তর
+                <br> কৃষি খামার সড়ক, ফার্মগেট, ঢাকা-১২১৫
+                <br>
+                <div style="text-decoration: underline;">www.dls.gov.bd</div>
+
+            </div>
+            <!-- <div  style="float: right;">
+                    <img style="height: 50px;width: 50px;" src="../../../assets/img/logo/govt-logo.png" alt="DLS Logo">
+                </div> -->
+        </div>
+        <div class="row" style="margin-bottom: 5px;margin-top: 15px;">
+            <!-- <div class="col-md-1"></div> -->
+            <div class="col-md-12">
+                <table class='table table-borderless' style="width:1160px;">
+                    <thead>
+                        <tr>
+                            <th style="width:480px;text-align: left; ">
+                                পত্র নং - {{letterNoFixed}}.{{letterNoInput}}
+                            </th>
+                            <th style="text-align: right;">
+                                তারিখ: {{printingDate}} ইং
+                            </th>
+                    </thead>
+                </table>
+            </div>
+            <!-- <div class="col-md-6">পত্র নং - {{letterNoFixed}}.{{letterNoInput}}</div>
+            <div class="col-md-4">তারিখ: {{printingDate}} ইং</div> -->
+            <!-- <div class="col-md-1"></div> -->
+        </div>
+        <div class="row" style="margin-bottom: 1px;">
+            <div class="col-md-1"></div>
+            <div class="col-md-10"> প্রাপক</div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <p style="margin-bottom: 5px;margin-top: 2px;">
+                    {{orgName}}<br> {{toAddress}}
+                </p>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10" style="padding-bottom: 5px;"><b>বিষয় :</b> {{subject}}।</div>
+            <div class=" col-md-1 "></div>
+        </div>
+        <!-- <br> -->
+        <div class="row ">
+            <div class="col-md-1 "></div>
+            <div class="col-md-10 ">
+                <p style="margin-bottom: 5px;margin-top: 5px;">
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; উপর্যুক্ত বিষয়ে আপনার {{proformaSubmissionDate}} তারিখে আবেদনের প্রেক্ষিতে পশুপুষ্টি উপকরণ ও টেরিনারি ঔষুধ সামগ্রী আমদানির অনাপত্তি সনদ (NOC) প্রদান কমিটির {{approvalDate}} তারিখে সভার সিদ্ধান্ত মোতাবেক নিম্নবর্ণিত
+                    পণ্য পত্রে উল্লেখিত শর্তসাপেক্ষে {{portOfLoading}} থেকে আমদানির জন্য অনাপত্তির সনদ প্রদান করা হল।
+                </p>
+            </div>
+            <div class="col-md-1 "></div>
+        </div>
+        <div class="row " style="margin-bottom: 5px; ">
+            <div class="col-md-1 "></div>
+            <div class="col-md-10 ">
+                <b style="text-decoration: underline; ">আমদানিযোগ্য পণ্য :</b>
+            </div>
+            <div class="col-md-1 "></div>
+        </div>
+        <div class="row " style="margin-bottom: 5px; ">
+            <div class="col-md-1"></div>
+            <div class="col-md-11">
+                <!-- <table style="height: 150px; width:1160px; border-collapse: collapse; font-size: 11px; "> -->
+                <!-- <table style="height: 150px; width:1160px; border-collapse: collapse;font-family: Arial, Helvetica, sans-serif;"> -->
+                <table style=" width:1160px; border-collapse: collapse;font-family: Arial, Helvetica, sans-serif;">
+                    <thead style="border-collapse: collapse; ">
+                        <tr style="border-collapse: collapse; ">
+                            <th style="width: 50px; text-align: center; vertical-align: top ; border: 1px solid #696969; ">
+                                SL No.
+                            </th>
+                            <th style="width: 200px; text-align: center; vertical-align: top ; border: 1px solid #696969; ">
+                                Description of Products
+                            </th>
+                            <th style="width: 150px; text-align: center; vertical-align: top; border: 1px solid #696969; ">
+                                PI No. & Date
+                            </th>
+                            <th style="width: 80px; text-align:center; vertical-align: top; border: 1px solid #696969; ">
+                                Country of Origin
+                            </th>
+                            <th style="width: 150px; text-align: center; vertical-align: top; border: 1px solid #696969; ">
+                                Name & Address of Exporter
+                            </th>
+                            <th style="width: 100px; text-align:center; vertical-align: top; border: 1px solid #696969; ">
+                                Pack Size
+                            </th>
+                            <th style="width: 70px; text-align:center; vertical-align: top; border: 1px solid #696969; ">
+                                Amount
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody style="border-collapse: collapse; ">
+                        <tr style="border-collapse: collapse; ">
+                            <td style="width:50px; vertical-align: middle; text-align: center; border: 1px solid #696969; padding-left: 5px; ">
+                                <ol type="1 " style="padding-left:15px;margin: 0px; ">
+                                    <li *ngFor="let d of proformaInvoiceDtls ">
+                                </ol>
+                            </td>
+                            <td style="width:200px; vertical-align: middle;text-align: left; border: 1px solid #696969; padding-left: 5px; ">
+                                <ul type="none " style="padding-left:5px;list-style-type: none;margin: 0px; ">
+                                    <p *ngFor="let d of proformaInvoiceDtls " style="margin: 0px;">{{d.prodName}} &nbsp; {{d.prodType}}</p>
+                                </ul>
+                            </td>
+                            <td style="width:150px; vertical-align: middle; border: 1px solid #696969; padding-left: 5px; ">
+                                PI-{{proformaInvoiceNo}}
+                                <br>Dated-{{proformaDate}}
+                            </td>
+                            <td style="width:80px; text-align:center; vertical-align: middle; border: 1px solid #696969; padding-left: 5px; ">
+                                {{countryOfOrigin}}
+                            </td>
+                            <td style="width:150px; vertical-align: middle; border: 1px solid #696969; padding-left: 5px; ">
+                                <ul type="none " style="padding-left:5px;list-style-type: none;margin: 0px; ">
+                                    <li *ngFor="let d of proformaInvoiceDtls ">
+                                        {{d.manufacturer}}
+                                    </li>
+                                </ul>
+                            </td>
+                            <td style="width: 100px;text-align:left; vertical-align: middle; border: 1px solid #696969; ">
+                                <ul type="none " style="padding-left: 5px; list-style-type: none;margin: 0px;">
+                                    <li *ngFor="let d of proformaInvoiceDtls ">{{d.packSize}}</li>
+                                </ul>
+                            </td>
+                            <td style="width:70px; text-align:center; vertical-align: middle; border: 1px solid #696969; padding-left: 5px; ">
+                                <p *ngFor="let d of proformaInvoiceDtls " style="margin:0px;">
+                                    <span *ngIf="d.noOfUnits>0">{{d.approvedAmount}} Unit
+                <!-- <img style="height: 16px; width: 16px;"  src="https://img.icons8.com/ios/50/000000/plus-minus.png"/>
+                                        10%   -->
+                </span>
+                                    <span *ngIf="d.totalAmount>0">{{d.approvedAmount}}
+                                        MT
+                                        <!-- <img style="height: 16px; width: 16px;"  src="https://img.icons8.com/ios/50/000000/plus-minus.png"/>
+                                        10% -->
+                                    </span>
+
+                                    <!-- <span *ngIf="d.approvedAmount zero">{{d.approvedAmount}}
+                                        MT</span>
+                                    <ng-template #zero>
+                                        0 MT
+                                    </ng-template> -->
+                                </p>
+                                <br>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" style="margin-bottom: 5px;">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <b style="text-decoration: underline;">শর্তাবলী :</b>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="selectedNocId==1">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                ১. আমদানিতব্য পণ্য অবশ্যই পোল্ট্রি খাদ্য / পশু খাদ্য হিসাবে ব্যবহার করতে হবে। <br> ২. কমিটির সদস্য(গণ) ও ক্ষমতা প্রাপ্ত কর্মকর্তা কর্তৃক সময় সময় ওয়্যার হাউজ, ব্যবসা প্রতিষ্ঠান ও বাজার পরিদর্শনে এবং বিধি মোতাবেক ব্যাবস্থা গ্রহণে প্রয়োজনীয়
+                সহযোগিতা করতে হবে। <br> ৩. আমদানিতব্য পণ্য রিপ্যাকিং করা যাবে না এবং পোল্ট্রি খাদ্য / পশু খাদ্য ব্যতীত অন্য কোনভাবে ব্যবহার করা যাবে না। <br> ৪. এই ছাড়পত্রের মেয়াদ ইস্যুর তারিখ হতে ১(এক) বৎসর পর্যন্ত বলবৎ থাকবে। পণ্য আমদানি ও পণ্য খালাস
+                উক্ত ১(এক) বছরের মধ্যে করতে হবে। <br> ৫. সরকারের বিদ্যমান আইনের ব্যত্যয় ঘটলে অনাপত্তি সনদ(NOC) বাতিল বলে গণ্য হবে এবং আইনানুগ ব্যবস্থা গ্রহণ করা হবে। <br> ৬. পশুখাদ্য বিধিমালা-২০১৩ এবং আমদানি নীতি আদেশ ২০১৫-২০১৮ এর ধারা-১৭ তে উল্লেখিত
+                বিষয়াদি অনুসরণ করতে হবে। <br> ৭. সকল চালান জেলা প্রাণিসম্পদ কর্মকর্তা/তাঁর প্রতিনিধির উপস্থিতিতে নমুনা সংগ্রহপূর্বক পিআরটিসি, চট্টগ্রাম/সরকার অনুমোদিত ল্যাবে পরীক্ষাসমূহ (Bovine and Porcine) উপজাতের উপস্থিতি, মাইক্রোবায়োলোজিক্যাল পরীক্ষা,
+                ভারী ধাতুর উপস্থিতি ও ক্ষতিকারক এন্টিবায়োটিক, Pesticide, ক্ষতিকারক রাসায়নিক দ্রব্য উপস্থিতি) করাতে হবে। <br> ৮. পণ্য খালাসের পূর্বে ভেটেনারী হেলথ সার্টিফিকেট, শিপিং ডকুমেন্ট ও অন্যান্য কাগজপত্র প্রাণিসম্পদ অধিদপ্তর কর্তৃক যাচাই করে নিতে
+                হবে। <br> ৯. আমদানিকৃত পণ্যের প্যাকেটের গায়ে পণ্যের নাম, উৎস প্রাণীর নাম, পণ্যের উপাদানসমূহ (শতকরা হারসহ), কোম্পানী, উৎপাদনকারী দেশের নাম ও উৎপাদনের তারিখ স্পষ্টাকারে উল্লেখ থাকতে হবে।
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="selectedNocId==2">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                ১. আমদানিতব্য পণ্য অবশ্যই গবাদিপশু ও পোল্ট্রির চিকিৎসা/রোগ প্রতিরোধে ব্যবহার করতে হবে। <br> ২. কমিটির সদস্য(গণ) ও ক্ষমতা প্রাপ্ত কর্মকর্তা কর্তৃক সময় সময় ওয়্যার হাউজ, ব্যবসা প্রতিষ্ঠান ও বাজার পরিদর্শনে এবং বিধি মোতাবেক ব্যাবস্থা গ্রহণে
+                প্রয়োজনীয় সহযোগিতা করতে হবে। <br> ৩. আমদানিতব্য পণ্য রিপ্যাকিং করা যাবে না এবং গবাদিপশু ও পোল্ট্রির চিকিৎসা/রোগ প্রতিরোধ ব্যতীত অন্য কোনভাবে ব্যবহার করা যাবে না। <br> ৪. এই ছাড়পত্রের মেয়াদ ইস্যুর তারিখ হতে ১(এক) বৎসর পর্যন্ত বলবৎ থাকবে।
+                <br> ৫. সরকারের বিদ্যমান আইনের ব্যত্যয় ঘটলে অনাপত্তি সনদ(NOC) বাতিল বলে গণ্য হবে এবং আইনানুগ ব্যবস্থা গ্রহণ করা হবে। <br> ৬. পশুখাদ্য বিধিমালা-২০১৩ এবং আমদানি নীতি আদেশ ২০১৫-২০১৮ এর ধারা-১৭ তে উল্লেখিত বিষয়াদি অনুসরণ করতে হবে। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="selectedNocId==3">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                ১. কোন অবস্থাতেই MBM(Meat & Bone Meal) আমদানি করা যাবে না। <br> ২. নিজস্ব Manufacturing Plant/ম্যানুফ্যাকচারিং কোম্পানীর অনুমোদিত রপ্তানিকারক হতে Poultry Meal আমদানি করতে হবে। <br> ৩. আমদানিতব্য পোল্ট্রি মিলে ন্যূনতম ৫৫%-৬৫% প্রোটিন থাকতে
+                হবে।
+                <br> ৪. আমদানিতব্য পণ্য অবশ্যই পোল্ট্রি খাদ্য/ মৎস্য খাদ্য হিসাবে ব্যবহার করতে হবে। <br> ৫. অমদানীকৃত পণ্যের রপ্তানিকারক দেশের উপর্যুক্ত কর্তৃপক্ষ কর্তৃক প্রদত্ত তেজস্ক্রিয়তা পরীক্ষণ রিপোর্ট (প্রতি কিলোগ্রামে সিজিয়াম -১৩৭ এর মাত্রা) সুস্পষ্টভাবে
+                উল্লেখ থাকতে হবে। <br> ৬. আমদানিতব্য Poultry Meal সকল প্রকার এন্টিবায়োটিক মুক্ত হতে হবে। <br> ৭. আমদানিতব্য পণ্যটি ক্ষতিকারক ক্রোমিয়াম, টেনারি উপজাত ও মেলামিন মুক্ত হতে হবে। পণ্যটি Porcine and Bovine উপজাত মুক্ত হতে হবে। এ লক্ষে Porcine
+                and Bovine উপজাত উপস্থিতির পরীক্ষা করাতে হবে। <br> ৮. পণ্যটি ২৫/৫০/১০০ কেজি প্যাক সাইজের ব্যাগে আমদানি করতে হবে। <br> ৯. আমদানিকৃত পণ্যের প্যাকেটের গায়ে পণ্যের নাম, উৎস প্রাণীর নাম, পণ্য ও উপাদানসমূহ (শতকরা হারসহ ), কোম্পানি উৎপাদনকারী
+                দেশের নাম (Country of Origin) উৎপাদনের তারিখ স্পষ্টকারে উল্লেখ থাকতে হবে। <br> ১০. প্রত্যেক চালানের পণ্য খালাসের পূর্বে প্রত্যেক কন্টেইনার থেকে নমুনা সংগ্রহ করে তা মন্ত্রনালয় কর্তৃক অনুমোদিত পরীক্ষাগার হতে পরীক্ষা করতে হবে এবং কি কি উপাদান
+                খাদ্যে সংমিশ্রিত আছে তা শতকরা হারে রিপোর্টে উল্লেখ করতে হবে। <br> ১১. ল্যাবরেটরী পরীক্ষা রিপোর্ট ব্যতীত আমদানিকৃত কোন Poultry Meal বন্দর থেকে খালাস করা যাবে না। <br> ১২. পণ্য খালাসের পূর্বে পণ্যের আমদানিকৃত দেশ হতে ইস্যুকৃত Health Certificate-
+                প্রাণিসম্পদ অধিদপ্তর এর মাধ্যমে সঠিকতা যাচাই করতে হবে। <br> ১৩. আমদানিকৃত Poultry Meal অবশ্যই শতভাগ পোল্ট্রি উপজাত সংমিশ্রনে তৈরি করতে হবে। <br> ১৪. পণ্য খালাসের পূর্বে ভেটেনারি হেলথ সার্টিফিকেট, শিপিং ডকুমেন্ট ও অন্যান্য কাগজপত্র প্রাণিসম্পদ
+                অধিদপ্তর কর্তৃক যাচাই করে নিতে হবে। <br> ১৫. আমদানিকৃত পণ্য খালাসের পূর্বে গবাদিপশু ও শুকরের উপজাতের উপস্থিতি, মাইক্রোবায়োলোজিক্যাল পরীক্ষা, ভারী ধাতুর উপস্থিতি ও ক্ষতিকারক এন্টিবায়োটিক এর উপস্থিতি, জীবাণু মুক্ত এবং পুষ্টিমান সম্পর্কে
+                সরকার কর্তৃক অনুমোদিত ল্যাবরেটরিতে পরীক্ষাপূর্বক তার সনদপত্র অত্র দপ্তরে দাখিল করতে হবে। নমুনা সংগ্রহের সময় সংশ্লিষ্ট ডিএলও/ ইউএলও উপস্থিত থাকবেন। এ পরীক্ষা সংক্রান্ত যাবতীয় ব্যয়ভার আমদানিকারক/সত্ত্বাধিকারী বহন করবে। যদি পরীক্ষার ফলাফল
+                সন্তোষজনক না হয় তবে রপ্তানিকারক নিজ ব্যয়ে সংশ্লিষ্ট চালান ফিরত নিতে বাধ্য থাকবে। <br> ১৬. অনাপত্তি সনদ প্রদান কমিটির সদস্যগণ ও ক্ষমতাপ্রাপ্ত কর্মকর্তা কর্তৃক সময় সময় ওয়ার হাউজ, ব্যবসা প্রতিষ্ঠান ও বাজার পরিদর্শনপূর্বক বিধি মোতাবেক ব্যবস্থা
+                গ্রহণ করতে পারবে। <br> ১৭. আমদানিতব্য পণ্য রিপ্যাকিং করা যাবে না এবং পশুখাদ্য/ পোল্ট্রি খাদ্য ব্যতীত অন্য কোনভাবে ব্যবহার করা যাবে না। <br> ১৮. অনাপত্তি পত্রের মেয়াদ ইস্যুর তারিখ হতে ১(এক) বৎসর পর্যন্ত বলবৎ থাকবে। পণ্য আমদানি ও পণ্য খালাস
+                উক্ত ১(এক) বছরের মধ্যে করতে হবে। <br> ১৯. পণ্য আমদানি সংক্রান্ত কোন ভুল/অসত্য তথ্য প্রদানের দায়-দায়িত্ব আমদানিকারক প্রতিষ্ঠান বহন করবে। <br> ২০. যে দেশসমূহ হতে পণ্য আমদানি করা হবে সে সকল দেশে এ ধরণের পণ্য তৈরির কারখানা আছে কি-না, মহাপরিচালক,
+                প্রাণী সম্পদ অধিদপ্ততর বিষয়টি নিশ্চিত করে মন্ত্রণালয়কে অবহিত করবেন। <br> ২১. ভুল/অসত্য তথ্য প্রদানের পাশাপাশি কোন তথ্য গোপন করা হলে ইস্যুকৃত NOC বাতিলসহ উক্ত প্রতিষ্ঠানের অনুকূলে ভবিষ্যতে এ ধরণের NOC প্রদান স্থায়ীভাবে বন্ধ করতে হবে। <br>                ২২. উপরোক্ত শর্তাবলী পালনে ব্যর্থ হলে এবং এতদসংক্রান্ত অন্যান্য সরকারী বিধি বিধান অনুসরণ করা না হলে অত্র NOC বাতিল বলে গণ্য হবে।
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="selectedNocId==4">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                ১. আমদানিতব্য পণ্য অবশ্যই পোল্ট্রি খাদ্য/পশু খাদ্য হিসেবে ব্যবহার করতে হবে। <br> ২. কমিটির সদস্য(গণ) ও ক্ষমতাপ্রাপ্ত কর্মকর্তা কর্তৃক সময় ওয়্যার হাউজ, ব্যবসা প্রতিষ্ঠান ও বাজার পরিদর্শনে এবং বিধি মোতাবেক ব্যবস্থা গ্রহণে প্রয়োজনীয় সহযোগিতা
+                করতে হবে। <br> ৩. আমদানিতব্য পণ্য রিপ্যাকিং করা যাবে না এবং পশুখাদ্য/ পোল্ট্রি খাদ্য ব্যতীত অন্য কোনভাবে ব্যবহার করা যাবে না। <br> ৪. এই ছাড়পত্রের মেয়াদ ইস্যুর তারিখ হতে ১(এক) বৎসর পর্যন্ত বলবৎ থাকবে। পণ্য আমদানি ও পণ্য খালাস উক্ত ১(এক)
+                বছরের মধ্যে করতে হবে। <br> ৫. সরকারের বিদ্যমান আইনের ব্যত্যয় ঘটলে অনাপত্তি সনদ(NOC) বাতিল বলে গণ্য হবে এবং আইনানুগ ব্যবস্থা গ্রহণ করা হবে। <br> ৬. পশুখাদ্য বিধিমালা-২০১৩ এবং আমদানি নীতি আদেশ ২০১৫-২০১৮ এর ধারা-১৭ তে উল্লেখিত বিষয়াদি অনুসরণ
+                করতে হবে।
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <!-- <br> -->
+        <!-- <br>
+        <br> -->
+        <div class="row" style="padding-left: 840px;padding-top: 15px; text-align: center;">
+            <!-- (ড. মো: আবু সুফিয়ান) <br> -->
+            <!-- সহকারী পরিচালক (প্রাণিস্বাস্থ্য ও প্রশাসন) <br> -->
+            উপপরিচালক (প্রাণিস্বাস্থ্য) <br> পক্ষে, মহাপরিচালক <br> প্রাণিসম্পদ অধিদপ্তর, বাংলাদেশ, ঢাকা। <br>
+            <!-- ফোন: ০২-৯১১৫৮৬৮ <br> -->
+            ফোন:০২-৫৮১৫৭২১১
+            <br>ই-মেইল:adhealthdls@gmail.com
+        </div>
+        <!-- <div class="row" *ngIf="selectedNocId==1">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. কমিশনার, কাস্টমস হাউজ, চট্টগ্রাম, বাংলাদেশ । <br>
+                ২. সহকারী পরিচালক, প্রাণীসম্পদ কয়ারেনটাইন স্টেশন, চট্টগ্রাম, বাংলাদেশ । <br>
+                ৩. সভাপতি, আহকাব, সেন্টার পয়েন্ট, ইউনিট -১২ ডি, ১৪/এ, তেজকুনীপাড়া, ফার্মগেট বা/এ, তেজগাঁও, ঢাকা
+                -১২২৫ । <br>
+                ৪. জেলা প্রাণীসম্পদ কর্মকর্তা, মানিকগঞ্জ । <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div> -->
+        <!-- <div class="row" *ngIf="onulipiId==0">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. কমিশনার, কাস্টমস হাউজ, চট্টগ্রাম, বাংলাদেশ । <br>
+                ২. সহকারী পরিচালক, প্রাণীসম্পদ কয়ারেনটাইন স্টেশন, চট্টগ্রাম, বাংলাদেশ । <br>
+                ৩. সভাপতি, আহকাব, সেন্টার পয়েন্ট, ইউনিট -১২ ডি, ১৪/এ, তেজকুনীপাড়া, ফার্মগেট বা/এ, তেজগাঁও, ঢাকা
+                -১২২৫ । <br>
+                ৪. জেলা প্রাণীসম্পদ কর্মকর্তা, নারায়ণগঞ্জ । <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div> -->
+        <div class="row" *ngIf="onulipiId==0">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. কমিশনার, কাস্টমস হাউজ, চট্টগ্রাম, বাংলাদেশ । <br> ২. সহকারী পরিচালক, প্রাণীসম্পদ কয়ারেনটাইন স্টেশন, চট্টগ্রাম, বাংলাদেশ । <br> ৩. সভাপতি, আহকাব, সেন্টার পয়েন্ট, ইউনিট -১২ ডি, ১৪/এ, তেজকুনীপাড়া, ফার্মগেট বা/এ, তেজগাঁও, ঢাকা -১২২৫ । <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <!-- start onulipi -->
+        <div class="row" *ngIf="onulipiId==1">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. কমিশনার, কাস্টমস হাউজ, চট্টগ্রাম। <br> ২. জেলা প্রাণিসম্পদ কর্মকর্তা, চট্টগ্রাম। <br> ৩. পরিচালক (ভারপ্রাপ্ত), পিআরটিসি, সিভাসু, চট্টগ্রাম। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="onulipiId==2">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. সহকারী কমিশনার, সেনামসজিদ স্থল বন্দর, শিবগঞ্জ, চাঁপাইনবাবগঞ্জ। <br> ২. জেলা প্রাণিসম্পদ কর্মকর্তা, চাঁপাইনবাবগঞ্জ। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="onulipiId==3">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. কমিশনার, কাস্টমস হাউজ, বেনাপোল। <br> ২. জেলা প্রাণিসম্পদ কর্মকর্তা, যশোর। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="onulipiId==4">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. কমিশনার, কাস্টমস হাউজ, মংলা। <br> ২. জেলা প্রাণিসম্পদ কর্মকর্তা, খুলনা। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="onulipiId==5">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. সহকারী কমিশনার, হিলি স্থল বন্দর, হাকিমপুর, দিনাজপুর। <br> ২. জেলা প্রাণিসম্পদ কর্মকর্তা, দিনাজপুর। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="onulipiId==6">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. সহকারী কমিশনার, দর্শনা স্থল বন্দর, হাকিমপুর, চুয়াডাঙ্গা। <br> ২. জেলা প্রাণিসম্পদ কর্মকর্তা, চুয়াডাঙ্গা। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="onulipiId==7">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. কমিশনার, কাস্টমস হাউজ,হযরত শাহজালাল আন্তর্জাতিক বিমানবন্দর, কুর্মিটোলা, ঢাকা। <br> ২. সহকারী পরিচালক, প্রাণিসম্পদ কোয়ারেন্টাইন স্টেশন,হযরত শাহজালাল আন্তর্জাতিক বিমানবন্দর, কুর্মিটোলা, ঢাকা। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="onulipiId==8">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. সহকারী কমিশনার, কাস্টমস হাউজ,বাংলাবান্ধা স্থলবন্দর, পঞ্চগড়। <br> ২. জেলা প্রাণিসম্পদ কর্মকর্তা, পঞ্চগড়। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="onulipiId==9">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. সহকারী কমিশনার, কাস্টমস হাউজ, বিরল স্থলবন্দর, দিনাজপুর। <br> ২. জেলা প্রাণিসম্পদ কর্মকর্তা, দিনাজপুর। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="onulipiId==10">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. সহকারী কমিশনার, কাস্টমস হাউজ, রোহানপুর স্থলবন্দর, চাঁপাইনবাবগঞ্জ। <br> ২. জেলা প্রাণিসম্পদ কর্মকর্তা, চাঁপাইনবাবগঞ্জ। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="onulipiId==11">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. সহকারী কমিশনার, কাস্টমস হাউজ, ভোমরা স্থলবন্দর, সাতক্ষীরা। <br> ২. জেলা প্রাণিসম্পদ কর্মকর্তা, সাতক্ষীরা। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row" *ngIf="onulipiId==12">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div style="margin-bottom: 5px;">
+                    <b style="text-decoration: underline;">অনুলিপি:</b>
+                </div>
+                ১. সহকারী কমিশনার, কাস্টমস হাউজ, বুড়িমারী স্থলবন্দর, লালমনিরহাট। <br> ২. জেলা প্রাণিসম্পদ কর্মকর্তা, লালমনিরহাট। <br>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <br>
+        <br>
+    </div>
+</div>

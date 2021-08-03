@@ -1,0 +1,313 @@
+<div class="container" style="background-color:#ffffff;padding: 0;font-size: 17px;border-radius: 4px;">
+    <nav class="navbar navbar-default" style="background-color: #45A845;padding: 10px;">
+        <div class="container-fluid">
+          <div class="navbar-header">
+              <img src="../../assets/img/logo/govt-logo.png" style="float: left">
+          </div>
+          <ul class="nav navbar-nav">
+            <li><a class="active" style="color:#ffffff;font-size: 22px;font-weight: 600; margin-top: 1%;">অনলাইনে আবেদনের মাধ্যমে পশু খাদ্য ও পুষ্টি উপকরণ আমদানির অনাপত্তিপত্রের জন্য রেজিস্ট্রেশন করুন </a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+          <button type="button" style="float: right;" class="btn btn-sm btn-embossed btn-success" (click)="backToLogin()">Back to Login</button>
+        </div>
+      </div>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+       <div class="row">
+          <fieldset class="scheduler-border">
+              <legend class="scheduler-border">রেজিস্ট্রেশন ফরম</legend>
+          <form [formGroup]="registrationForm" (submit)="register()">
+              <div class="row">
+                <div class="col-md-8">
+                   <div class="form-group">
+                       <label for="org-name" class="control-label required">Organization Name<span style="color:red;">*</span><br><span class="lvl-bangla-font">প্রতিষ্ঠানের নাম</span></label>
+                     
+                       <input type="text" class="form-control" id="org-name" 
+                       [ngClass]="{'is-invalid': registrationForm.get('orgName').errors && registrationForm.get('orgName').touched}" 
+                       formControlName= "orgName">
+                       <div class="invalid-feedback" *ngIf="registrationForm.get('orgName').hasError('required')
+                       && registrationForm.get('orgName').touched">Organization name required</div>
+                       <div class="invalid-feedback" *ngIf="registrationForm.get('orgName').hasError('maxlength')
+                          && registrationForm.get('orgName').touched"> Organization name can be maximum 200 Character long</div>                    
+                    </div>
+                </div>
+                <div class="col-md-4"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                   <div class="form-group">
+                       <label for="contact-person">Contact Person<span style="color:red;">*</span><br><span class="lvl-bangla-font">প্রতিনিধি</span> </label>
+                      
+                       <input type="text" class="form-control" id="contact-person" 
+                       [ngClass]="{'is-invalid': registrationForm.get('contactName').errors && registrationForm.get('contactName').touched}" 
+                       formControlName= "contactName">
+                       <div class="invalid-feedback" *ngIf="registrationForm.get('contactName').hasError('required')
+                       && registrationForm.get('contactName').touched">Contact person required</div>
+                       <div class="invalid-feedback" *ngIf="registrationForm.get('contactName').hasError('maxlength')
+                          && registrationForm.get('contactName').touched"> Contact person can be maximum 50 Character long</div>                 
+                    </div>
+                </div>
+                <div class="col-md-6">
+                   <div class="form-group">
+                       <label for="position">Position<span style="color:red;">*</span> <br><span class="lvl-bangla-font">পজিশন</span> </label>
+                       
+                       <input type="text" class="form-control" id="position"
+                       [ngClass]="{'is-invalid': registrationForm.get('position').errors && registrationForm.get('position').touched}" 
+                        formControlName= "position">
+                        <div class="invalid-feedback" *ngIf="registrationForm.get('position').hasError('required')
+                        && registrationForm.get('position').touched">Position required</div>
+                        <div class="invalid-feedback" *ngIf="registrationForm.get('position').hasError('maxlength')
+                           && registrationForm.get('position').touched"> Position can be maximum 20 Character long</div> 
+                   </div>
+                </div>
+              </div>
+              <div class="row">
+                 <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="contact-no">Mobile No.<span style="color:red;">*</span><br><span class="lvl-bangla-font"> মোবাইল নম্বর </span> </label>
+                        
+                        <input type="text" class="form-control" id="contact-no" 
+                       [ngClass]="{'is-invalid': registrationForm.get('contactNo').errors && registrationForm.get('contactNo').touched}" 
+                       formControlName= "contactNo">
+                        <div class="invalid-feedback" *ngIf="registrationForm.get('contactNo').hasError('required')
+                        && registrationForm.get('contactNo').touched">Contact No required</div>
+                        <div class="invalid-feedback" *ngIf="registrationForm.get('contactNo').hasError('maxlength')
+                           && registrationForm.get('contactNo').touched">Mobile No. can be maximum 20 Character long</div>
+                    </div>
+                 </div>
+                 <div class="col-md-7">
+                     <div class="form-group">
+                         <label for="email">Email<span style="color:red;">*</span><br> <span class="lvl-bangla-font">ই-মেইল</span></label>
+                       
+                         <input type="text" class="form-control" id="email" 
+                         [ngClass]="{'is-invalid': registrationForm.get('email').errors && registrationForm.get('email').touched}" 
+                        formControlName= "email">
+                         <div class="invalid-feedback" *ngIf="registrationForm.get('email').hasError('required')
+                         && registrationForm.get('email').touched">Email No required</div>
+                         <div class="invalid-feedback" *ngIf="registrationForm.get('email').hasError('maxlength')
+                            && registrationForm.get('email').touched">Email can be maximum 50 Character long</div>
+                            <div class="invalid-feedback" *ngIf="registrationForm.get('email').hasError('email')
+                            && registrationForm.get('email').touched">Invalid email format</div>
+                       </div>
+                 </div>
+             </div>
+               <div class="row">
+                 <div class="col-md-4">
+                     <div class="form-group">
+                         <label for="division">Select Division<span style="color:red;">*</span> <br><span class="lvl-bangla-font">বিভাগ</span></label>                         
+                         <select id="division" class="form-control" (change)="onDivisionChange()"
+                         [ngClass]="{'is-invalid': registrationForm.get('division').errors && registrationForm.get('division').touched}" 
+                          formControlName="division" required>
+                           <option value="" selected>select</option>
+                           <option *ngFor="let d of divisions" [value]="d.division">{{d.division}}</option>
+                         </select>
+                      <div class="invalid-feedback" *ngIf="registrationForm.get('division').hasError('required')
+                      && registrationForm.get('division').touched">Division required</div>
+                     </div>
+                 </div>
+                 <div class="col-md-4">
+                     <div class="form-group">
+                         <label for="district">Select District<span style="color:red;">*</span><br><span class="lvl-bangla-font">জেলা</span></label>
+                         
+                         <select id="district" class="form-control" 
+                         [ngClass]="{'is-invalid': registrationForm.get('district').errors && registrationForm.get('district').touched}" 
+                         (change)="onDistrictChange()" formControlName="district" required>
+                           <option value="" selected>select</option>
+                           <option *ngFor="let d of ds" [value]="d.district">{{d.district}}</option>
+                         </select>
+                      <div class="invalid-feedback" *ngIf="registrationForm.get('district').hasError('required')
+                      && registrationForm.get('district').touched">District required</div>
+                     </div>
+                 </div>
+                 <div class="col-md-4">
+                     <div class="form-group">
+                         <label for="upazila">Select Upazila <span style="color:red;">*</span><br><span class="lvl-bangla-font">উপজেলা</span></label>                         
+                         <select id="upazila" class="form-control" formControlName="upazila"
+                         [ngClass]="{'is-invalid': registrationForm.get('upazila').errors && registrationForm.get('upazila').touched}">
+                           <option value="" selected>select</option>
+                           <option *ngFor="let u of up" [value]="u.upazila">{{u.upazila}}</option>
+                         </select>
+                      <div class="invalid-feedback" *ngIf="registrationForm.get('upazila').hasError('required')
+                      && registrationForm.get('upazila').touched">Upazila required</div>
+                     </div>
+                 </div>
+             </div>
+             <div class="row">
+               <div class="col-md-12">
+                 <div class="form-group">
+                     <label for="address">Address<span style="color:red;">*</span><br><span class="lvl-bangla-font">প্রতিষ্ঠানের ঠিকানা</span></label>
+                     
+                     <textarea id="address" class="form-control" formControlName="address" 
+                     [ngClass]="{'is-invalid': registrationForm.get('address').errors && registrationForm.get('address').touched}"></textarea>
+                     <div class="invalid-feedback" *ngIf="registrationForm.get('address').hasError('required')
+                      && registrationForm.get('address').touched">Address required</div>
+                      <div class="invalid-feedback" *ngIf="registrationForm.get('address').hasError('maxlength')
+                      && registrationForm.get('address').touched">Address can be maximum 20 Character long</div>
+                 </div>
+               </div>
+             </div>
+             <div class="row">
+               <div class="col-md-4">
+                   <div class="form-group">
+                       <label for="dls-license-type">Select DLS License Type<span style="color:red;">*</span><br><span class="lvl-bangla-font">ডিএলএস লাইসেন্স টাইপ</span></label>
+                       
+                       <select id="dls-license-type" class="form-control" 
+                       [ngClass]="{'is-invalid': registrationForm.get('dlsLicenseType').errors && registrationForm.get('dlsLicenseType').touched}" 
+                       formControlName="dlsLicenseType">
+                         <option value="" selected>select</option>
+                         <option value="Feed Mill">Category 1-Feed Mill</option>
+                         <option value="Category 1">Category 1-Pre Mix</option>
+                         <option value="Category 2">Category 2</option>
+                         <option value="Farm">Farm</option>
+                       </select>
+                      <div class="invalid-feedback" *ngIf="registrationForm.get('dlsLicenseType').hasError('maxlength')
+                      && registrationForm.get('dlsLicenseType').touched">DLS license type required</div>
+                    </div>
+               </div>
+               <div class="col-md-4">
+                 <div class="form-group">
+                     <label for="dls-license-no">DLS License/Reg No.<span style="color:red;">*</span><br><span class="lvl-bangla-font">ডিএলএস লাইসেন্স/রেজিঃ নম্বর</span></label>
+                    
+                     <input type="text" class="form-control" id="dls-license-no"  
+                     [ngClass]="{'is-invalid': registrationForm.get('dlsLicenseNo').errors && registrationForm.get('dlsLicenseNo').touched}" 
+                     formControlName= "dlsLicenseNo">
+                      <div class="invalid-feedback" *ngIf="registrationForm.get('dlsLicenseNo').hasError('required')
+                      && registrationForm.get('dlsLicenseNo').touched">DLS license or registration required</div>
+                      <div class="invalid-feedback" *ngIf="registrationForm.get('dlsLicenseNo').hasError('maxlength')
+                      && registrationForm.get('dlsLicenseNo').touched">DLS license or registration can be maximum 20 Character long</div>
+                    </div>
+               </div>
+               <div class="col-md-4">
+                 <div class="form-group">
+                     <label for="dls-license-scan-copy">DLS License Scan Copy<span style="color:red;">*</span> <br><span class="lvl-bangla-font">ডিএলএস লাইসেন্স স্ক্যান কপি</span></label>
+                                        
+                      <input type="file" class="form-control" id="dls-license-scan-copy" (change)="onSelectedDlsFile($event)"
+                      placeholder="DLS license scan copy"
+                     [ngClass]="{'is-invalid': registrationForm.get('dlsLicenseScan').errors && registrationForm.get('dlsLicenseScan').touched}" 
+                     formControlName= "dlsLicenseScan">
+                     <small class="help-block" style="color: #888889;font-size: 11px;">File size should be(Max 1MB) in PDF Format </small>
+                     <div class="invalid-feedback" *ngIf="registrationForm.get('dlsLicenseScan').hasError('required')
+                     && registrationForm.get('dlsLicenseScan').touched">DLS license scan copy required</div>
+                  </div>
+               </div>
+             </div>
+             <div class="row">
+                 <div class="col-md-4">
+                     <div class="form-group">
+                         <label for="nid-no">NID No<span style="color:red;">*</span><br><span class="lvl-bangla-font">এনআইডি নম্বর</span></label>
+                         
+                       <input type="text" class="form-control" id="nid-no" 
+                       [ngClass]="{'is-invalid': registrationForm.get('nidNo').errors && registrationForm.get('nidNo').touched}" 
+                       formControlName= "nidNo">
+                       <div class="invalid-feedback" *ngIf="registrationForm.get('nidNo').hasError('required')
+                      && registrationForm.get('nidNo').touched">NID No required</div>
+                      <div class="invalid-feedback" *ngIf="registrationForm.get('nidNo').hasError('maxlength')
+                      && registrationForm.get('nidNo').touched">NID No can be maximum 20 Character long</div>
+                    </div>
+                    </div>
+                 <div class="col-md-4">
+                   <div class="form-group">
+                       <label for="nid-scan-copy">NID Scan Copy <span style="color:red;">*</span><br><span class="lvl-bangla-font">এনআইডি স্ক্যান কপি</span> </label>
+                       
+                        <input type="file" class="form-control" id="nid-scan-copy" (change)="onSelectedNidFile($event)"
+                        placeholder="NID scan copy"
+                       [ngClass]="{'is-invalid': registrationForm.get('nidScan').errors && registrationForm.get('nidScan').touched}" 
+                       formControlName= "nidScan">
+                     <small class="help-block" style="color: #888889;font-size: 11px;">File size should be(Max 1MB) in PDF Format </small>
+                      <div class="invalid-feedback" *ngIf="registrationForm.get('nidScan').hasError('required')
+                      && registrationForm.get('nidScan').touched">NID scan copy required</div>
+                       </div>
+                 </div>
+                 <div class="col-md-4">
+                   <div class="form-group">
+                       <label for="irc-license-scan-copy">IRC Scan Copy <span style="color:red;">*</span><br><span class="lvl-bangla-font">আইআরসি স্ক্যান কপি</span> </label>
+                       
+                        <input type="file" class="form-control" id="irc-license-scan-copy" (change)="onSelectedIrcFile($event)"
+                        placeholder="IRC scan copy"
+                       [ngClass]="{'is-invalid': registrationForm.get('ircScan').errors && registrationForm.get('ircScan').touched}" 
+                       formControlName= "ircScan">
+                     <small class="help-block" style="color: #888889;font-size: 11px;">File size should be(Max 1MB) in PDF Format </small>
+                      <div class="invalid-feedback" *ngIf="registrationForm.get('ircScan').hasError('required')
+                      && registrationForm.get('ircScan').touched">IRC Scan Copy required</div>
+                    </div>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-md-4">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <label for="user-name">Username <span style="color:red;">*</span> <br><span class="lvl-bangla-font">ইউজারনেম</span></label>
+                       
+                        <input type="text" class="form-control" id="user-name" 
+                        [ngClass]="{'is-invalid': registrationForm.get('username').errors && registrationForm.get('username').touched}" 
+                         formControlName= "username" autocomplete="off" (keyup)="isUsernameAvailable()">
+                        <div class="input-group-append input-group-text">
+                            <span id="username-spinner" *ngIf="regSpinner && !(registrationForm.get('username').hasError('required') || registrationForm.get('username').hasError('pattern') || registrationForm.get('username').hasError('maxlength'))" class="fas fa-1x fa-spinner fa-pulse" style="color:#54B575;margin-left: 3px;"></span>
+                            <span class="fa fa-check username-unique-check-success" *ngIf="regOk && !(registrationForm.get('username').hasError('required') || registrationForm.get('username').hasError('pattern') || registrationForm.get('username').hasError('maxlength'))" id="username-unique-check-success" style="color:green;margin-left: 3px;"></span>
+                            <span class="fa fa-times username-unique-check-error" *ngIf="regNotOk && !(registrationForm.get('username').hasError('required') || registrationForm.get('username').hasError('pattern') || registrationForm.get('username').hasError('maxlength'))" id="username-unique-check-success" style="color:red;margin-left: 3px;"></span>
+                        </div>
+                      </div>
+                        <div class="invalid-feedback" *ngIf="registrationForm.get('username').hasError('required')
+                        && registrationForm.get('username').touched">Username required</div>
+                        <div class="invalid-feedback" *ngIf="(!registrationForm.get('username').hasError('required')
+                        && registrationForm.get('username').touched) && !usernameValidity">Username not available</div>
+                        <div class="invalid-feedback" *ngIf="registrationForm.get('username').hasError('maxlength')
+                        && registrationForm.get('username').touched">Username can be maximum 20 Character long</div>
+                        <div class="invalid-feedback" *ngIf="registrationForm.get('username').hasError('pattern')
+                        && registrationForm.get('username').touched && !registrationForm.get('username').hasError('maxlength')">Username must have atleast one character</div>
+                    </div>
+                 </div>
+                 <div class="col-md-4">
+                     <div class="form-group">
+                        <label for="password">Password<span style="color:red;">*</span> <br><span class="lvl-bangla-font">পাসওয়ার্ড  </span></label>
+                        
+                        <input type="password" class="form-control" id="password"
+                        [ngClass]="{'is-invalid': registrationForm.get('password').errors && registrationForm.get('password').touched}" 
+                         formControlName= "password" autocomplete="new-password">
+                        <div class="invalid-feedback"
+                        *ngIf="registrationForm.get('password').hasError('required')
+                        && registrationForm.get('password').touched">Password required</div>
+                         <div class="invalid-feedback" *ngIf="registrationForm.get('password').hasError('minlength')
+                          && registrationForm.get('password').touched"> Password must be atleast 5 character long</div>
+                       <div class="invalid-feedback" *ngIf="registrationForm.get('password').hasError('maxlength') 
+                       && registrationForm.get('password').touched">Password should not more than 10 character long</div>
+                    </div>
+                 </div>
+                 <div class="col-md-4">
+                     <div class="form-group">
+                         <label for="confirm-password">Confirm Password <span style="color:red;">*</span><br><span class="lvl-bangla-font"> কনফার্ম পাসওয়ার্ড</span></label>
+                         
+                         <input type="password" class="form-control" id="confirm-password"  autocomplete="new-password"
+                         [ngClass]="{'is-invalid': registrationForm.get('confirmPassword').errors &&
+                         registrationForm.get('confirmPassword').touched
+                         || registrationForm.get('confirmPassword').touched && registrationForm.hasError('mismatch')}" 
+                          formControlName= "confirmPassword">
+                      <div *ngIf="registrationForm.get('confirmPassword').hasError('required')
+                       && registrationForm.get('confirmPassword').touched" class="invalid-feedback">Confirm Password required</div>
+                      <div *ngIf="registrationForm.hasError('mismatch') && registrationForm.get('confirmPassword').touched"
+                       class="invalid-feedback">Confirm password not matched</div>
+                    </div>
+                 </div>
+               <div class="row">
+                 <div class="col-md-12">
+                   <div class="form-group">
+                    <button class="form-control btn-success" [ngClass]="{'btn-registration-disabled': registrationForm.invalid}" 
+                    [disabled]="registrationForm.invalid || !usernameValidity"
+                    style="padding: 0; color: white;font-size:large; font-weight: 500;">Register</button>
+                   </div>
+                 </div>
+               </div>
+            </div>
+           </form>
+           </fieldset>
+       </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '4px', fullScreenBackdrop:true}"></ngx-loading>

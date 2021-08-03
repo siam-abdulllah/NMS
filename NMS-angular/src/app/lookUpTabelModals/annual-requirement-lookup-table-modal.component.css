@@ -1,0 +1,29 @@
+
+.form-control{
+    background-image: none;
+    border: 1px solid green !important;
+    border-radius: none;
+}
+
+.table>thead>tr>th{
+    vertical-align: top !important;
+}
+
+ul {
+    padding-left: 5px !important;
+    margin-bottom: 1px !important;
+    border-bottom: 1px solid lightgrey !important;
+}
+    
+ 
+ .table>thead>tr>th{
+    vertical-align: top !important;
+    border: 1px solid #ffffff;
+}
+.table>tbody>tr>td{
+    vertical-align: middle !important;
+    border: 1px solid #c8c8c8;
+}
+.table>thead>tr{
+    border-bottom: 2px solid #c8c8c8;
+}

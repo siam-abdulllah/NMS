@@ -1,0 +1,72 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #currencyRateForm="ngForm" novalidate novalidate autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="currencyRate.id">Edit Currency Rate</span>
+                        <span *ngIf="!currencyRate.id">Create New Currency Rate</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group m-form__group">
+                                <label for="Currency">Currency Name<span style="color:red;">*</span> </label>
+                                <input type="text" id="currency" class="form-control"
+                                    [(ngModel)]="currencyRate.currency" name="currency" #name="ngModel"
+                                    [ngClass]="{ 'is-invalid': name.touched && name.invalid }" required />
+                                <div *ngIf="name.touched && name.invalid" class="invalid-feedback">
+                                    <div *ngIf="name.errors.required">Currency is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group m-form__group">
+                                <label for="TickerIcon">Currency TickerIcon</label>
+                                <input type="text" id="tickerIcon" class="form-control"
+                                    [(ngModel)]="currencyRate.tickerIcon" name="tickerIcon" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group m-form__group">
+                                <label for="exchangeRate">Exchange Rate <span style="color:red;">*</span> </label>
+                                <!-- <input type="number" id="exchangeRate" class="form-control" min="0"
+                                    [(ngModel)]="currencyRate.exchangeRate" name="exchangeRate" #rate="ngModel"
+                                    [ngClass]="{ 'is-invalid': rate.touched && rate.invalid }" required />
+                                <div *ngIf="rate.touched && rate.invalid" class="invalid-feedback">
+                                    <div *ngIf="rate.errors.required">Exchange Rate is required</div>
+                                </div> -->
+                                <!--<input min='0' type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">  -->
+                                <input type="number" min="0" oninput="this.value = Math.abs(this.value)"
+                                    id="exchangeRate" class="form-control" min="0"
+                                    [(ngModel)]="currencyRate.exchangeRate" name="exchangeRate" #rate="ngModel"
+                                    [ngClass]="{ 'is-invalid': rate.touched && rate.invalid }" required>
+                                <div *ngIf="rate.touched && rate.invalid" class="invalid-feedback">
+                                    <div *ngIf="rate.errors.required">Exchange Rate is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">Cancel</button>
+                    <button *ngIf="!currencyRate.id" type="submit" class="btn btn-primary blue" (click)="save()"
+                        [disabled]="!currencyRateForm.form.valid"><i class="fa fa-save"></i>
+                        <span>Save</span></button>
+                    <button *ngIf="currencyRate.id" type="submit" class="btn btn-info" (click)="update(currencyRate)"><i
+                            class="fa fa-save"></i>
+                        <span>Update</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

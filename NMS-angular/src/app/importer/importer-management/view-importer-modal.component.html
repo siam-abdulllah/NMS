@@ -1,0 +1,272 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #importerForm="ngForm" novalidate novalidate autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>View ImporterInfo</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-7">
+                            <h3 style="color: green; font-weight: bold;">{{item.orgName}}</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button"  class="btn btn-primary blue"
+                            (click)="change()"><i class="fa fa-pencil-square-o"
+                                    aria-hidden="true"></i>
+                                Change Password</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-sitemap" aria-hidden="true"></i>
+                                            Organization Name
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.orgName}}</div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-server" aria-hidden="true"></i>
+                                            Contact Name
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.contactName}}</div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-phone-square" aria-hidden="true"></i>
+                                            Contact Number
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.contactNo}}</div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-briefcase" aria-hidden="true"></i>
+                                            Position
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.position}}</div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            Username
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.username}}</div>
+                            </div>
+                            <!-- change password -->
+                            <div *ngIf="changePasswordId==1" class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-key" aria-hidden="true"></i>
+                                            New Password
+                                            <span style="color:red;">*</span>
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">
+                                    <input type="password" autocomplete="new-password" id="Password"
+                                        class="form-control" [(ngModel)]="importer.password" name="password"
+                                        #password="ngModel"
+                                        [ngClass]="{ 'is-invalid': password.touched && password.invalid }" required
+                                        minlength="6" />
+                                    <div *ngIf="password.touched && password.invalid" class="invalid-feedback">
+                                        <div *ngIf="password.errors.required">Password is required </div>
+                                        <div *ngIf="password.errors.minlength">Password must be at least 6 characters
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="changePasswordId==1" class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-key" aria-hidden="true"></i>
+                                            Confirm Password
+                                            <span style="color:red;">*</span>
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">
+                                    <input type="password" autocomplete="new-password" id="ConfirmPassword"
+                                        class="form-control" name="confirmPassword"
+                                        [(ngModel)]="importer.confirmPassword"
+                                        [ngClass]="{ 'is-invalid': confirmPassword.touched && confirmPassword.invalid }"
+                                        required confirmPassword #confirmPassword="ngModel" />
+                                    <div *ngIf="confirmPassword.touched && confirmPassword.invalid"
+                                        class="invalid-feedback">
+                                        <div *ngIf="confirmPassword.errors.required">Confirm Password is required</div>
+                                    </div>
+                                    <div *ngIf="confirmPassword.touched && importer.password!=importer.confirmPassword"
+                                        class="invalid-feedback">
+                                        Passwords not matched
+                                    </div>
+                                </div>
+                            </div>
+                            <!--change password -->
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                                            Email
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.email}}</div>
+                            </div>
+
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            Division
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.division}}</div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            District
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.district}}</div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            Upazila
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.upazila}}</div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            Address
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.address}}</div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-file" aria-hidden="true"></i>
+                                            DLS License Type
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.dlsLicenseType}}</div>
+                            </div>
+                            <div class="row" style="border-bottom: 1px solid #f1f1f1 ;">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-id-card" aria-hidden="true"></i>
+                                            DLS License No.
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.dlsLicenseNo}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-3">
+                                    <h5>
+                                        <b>
+                                            <i class="fa fa-address-card" aria-hidden="true"></i>
+                                            NID No.
+                                        </b>
+                                    </h5>
+                                </div>
+                                <div class="col-md-1"><b>:</b></div>
+                                <div class="col-md-6">{{item.nidNo}}</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button *ngIf="changePasswordId==0" [disabled]="saving" type="button" class="btn btn-primary blue"
+                        (click)="close()">Close</button>
+
+                    <button *ngIf="changePasswordId==1" type="submit" class="btn btn-primary blue" (click)="updatePssword(item.id)"
+                        [disabled]="!importerForm.form.valid || importer.password!=importer.confirmPassword"><i
+                            class="fa fa-save"></i>
+                        <span>Update Password</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

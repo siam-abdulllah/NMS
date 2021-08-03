@@ -1,0 +1,310 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3 class="box-title"><strong>Proforma Invoice Summary Report</strong></h3>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-sm btn-embossed btn-primary" (click)="getDateWiseProformaByImporter()" [disabled]="!proformaInvoiceSearchForm.valid"><i
+class="fa fa-search"></i>Search</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-sm btn-embossed btn-danger" (click)="resetDateFilter()"><i
+class="fa fa-refresh"></i>&nbsp; Reset</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-primary blue" id="viewBtn" name="viewBtn" [disabled]="!proformaInvoiceSearchForm.valid" (click)="viewCheckRes()">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            View Report</button></div>
+
+                    </div>
+                    <!-- (click)="viewProformaSummaryReport(true)  -->
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form [formGroup]="proformaInvoiceSearchForm">
+                                <div class="row" style="padding-left: 40px;">
+                                    <div class="col-md-1" style="margin-top: 5px;">
+                                        <label for="from-date" class="control-label date-label">From</label>
+                                        <span style="color:red;">*</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="from-date" placeholder="From Date" formControlName="fromDate" bsDatepicker [bsConfig]="bsConfig" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="margin-top: 5px;">
+                                        <label for="to-date" class="control-label date-label">To</label>
+                                        <span style="color:red;">*</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="to-date" placeholder="To Date" [bsValue]="bsValue" formControlName="toDate" bsDatepicker [bsConfig]="bsConfig" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="margin: 5px;
+                          padding:0;    
+                          width:90px!important">
+                                        <div class="custom-control custom-radio" style="padding-top: 4px;">
+                                            <input id="pending" type="radio" class="custom-control-input" value="pending" name="status" formControlName="status">
+                                            <label class="custom-control-label" for="pending">&nbsp;&nbsp;&nbsp;&nbsp;Pending</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="margin:5px;
+                        padding:0;    
+                        width:90px!important">
+                                        <div class="custom-control custom-radio" style="padding-top: 4px;">
+                                            <input id="approved" type="radio" class="custom-control-input" value="approved" name="status" formControlName="status">
+                                            <label class="custom-control-label" for="approved">&nbsp;&nbsp;&nbsp;&nbsp;Approved</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="margin:5px;
+                          padding:0;    
+                          width:90px!important">
+                                        <div class="custom-control custom-radio" style="padding-top: 4px;">
+                                            <input id="rejected" type="radio" class="custom-control-input" value="rejected" name="status" formControlName="status">
+                                            <label class="custom-control-label" for="rejected">&nbsp;&nbsp;&nbsp;&nbsp;Rejected</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="margin:5px;padding:0;">
+                                        <div class="custom-control custom-radio" style="padding-top: 4px;">
+                                            <input id="rejected" type="radio" class="custom-control-input" value="approved/rejected" name="status" formControlName="status">
+                                            <label class="custom-control-label" for="approved/rejected">&nbsp;&nbsp;&nbsp;&nbsp;Approved/Rejected</label>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-1" style="margin-top: 5px;">
+                              <label for="pending-approval" class="control-label date-label">Pending</label>
+                            </div>
+                            <div class="col-md-1" style="margin-top: 5px;">
+                               <input type="checkbox" class="flat-red" id="pending-approval" formControlName="isPending" />
+                            </div>
+                            <div class="col-md-1" style="margin-top: 5px;">
+                                <label for="approval-proforma" class="control-label date-label">Approved</label>
+                              </div>
+                              <div class="col-md-1" style="margin-top: 5px;">
+                                 <input type="checkbox" class="flat-red" id="approval-proforma" formControlName="isApproved" />
+                              </div> -->
+                                    <!-- <div class="col-md-1">
+                                        <button type="button" class="btn btn-sm btn-embossed btn-primary" (click)="getDateWiseProformaByImporter()" [disabled]="!proformaInvoiceSearchForm.valid"><i
+                        class="fa fa-search"></i>Search</button>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="button" class="btn btn-sm btn-embossed btn-danger" (click)="resetDateFilter()"><i
+                        class="fa fa-refresh"></i>&nbsp; Reset</button>
+                                    </div> -->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box" style="border-top: white;">
+                <div class="box-body">
+                    <div class="row" style="margin: 5px 0px 5px 0px">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <input name="filterText" class="form-control m-input" type="text" [(ngModel)]="searchText" (input)="getSearchFilterValue(searchText)" placeholder="Search..">
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive" style="border: 1px solid #dfe4e7; width: 100%;">
+                                <table class="table table-bordered table-hover table-striped">
+                                    <thead style="background-color: #3c8dbc;color:white;">
+                                        <tr>
+                                            <!-- <th style="width: 100px;">Action</th> -->
+                                            <th style="width: 200px;">
+                                                Name of<br>the Importer
+                                            </th>
+                                            <th style="width: 200px;">
+                                                Name of<br>the Products
+                                            </th>
+                                            <th style="width: 200px;">
+                                                PINo.
+                                            </th>
+                                            <th style="width: 200px;">Submission Date</th>
+                                            <th style="width: 200px;">PI <br>Amount<br>(Ton/Unit)</th>
+                                            <th style="width: 200px;">Approved <br> Amount<br>(Ton/Unit)</th>
+                                            <th style="width: 200px;">Approval<br> Status</th>
+                                            <th style="width: 200px;">Country<br>of<br>Origin</th>
+                                            <th style="width: 200px;">
+                                                Pack<br>Size
+                                            </th>
+                                            <th style="width: 200px;">
+                                                Type
+                                            </th>
+                                            <th style="width: 200px;">PI<br>Price</th>
+                                            <th style="width: 200px;">PI<br>Price(BDT)</th>
+                                            <th scope="col">Approval<br>Price(BDT)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let p of porformaInfos | paginate: { itemsPerPage:8, currentPage: p} | filter: searchText">
+                                            <!-- <td>
+                           <div class="btn-group dropdown" dropdown container="body">
+                             <button class="dropdown-toggle btn btn-sm btn-embossed btn-primary"  dropdownToggle>
+                                 <i class="fa fa-cog"></i><span class="caret"></span> Actions
+                             </button>
+                             <ul class="dropdown-menu" *dropdownMenu>
+                                 <li>
+                                     <a href="javascript:;"
+                                       >Details</a>
+                                 </li>
+                             </ul>
+                         </div>
+                          </td> -->
+                                            <td>
+                                                {{p.importerInfo.orgName}}
+                                                <br>
+                                                <small>{{p.importerInfo.address}}</small>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <ul type="none">
+                                                        <li *ngFor="let d of p.proformaInvoiceDtls">{{d.prodName}}</li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td>{{p.proformaInvoiceNo}}</td>
+                                            <td>{{p.submissionDate | date}}</td>
+                                            <td>
+                                                <div>
+                                                    <ul type="none">
+                                                        <li *ngFor="let d of p.proformaInvoiceDtls">
+                                                            <span *ngIf="d.noOfUnits">{{d.noOfUnits}} Unit</span>
+                                                            <br>
+                                                            <span *ngIf="d.totalAmount">{{d.totalAmount}} MT</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <ul type="none">
+                                                        <li *ngFor="let d of p.proformaInvoiceDtls">
+                                                            <div *ngIf="d.approvedAmount === null || undefined || '' ">
+                                                                <span>
+                                  --
+                                </span>
+                                                            </div>
+                                                            <div *ngIf="d.approvedAmount == 0 ">
+                                                                <span>
+                                  --
+                                </span>
+                                                            </div>
+                                                            <div *ngIf="d.approvedAmount">
+                                                                <span *ngIf="d.noOfUnits>0">{{d.approvedAmount}}
+                                  Unit</span>
+                                                                <span *ngIf="d.totalAmount>0">{{d.approvedAmount}}
+                                  MT</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <ul type="none">
+                                                        <li *ngFor="let d of p.proformaInvoiceDtls">
+                                                            <div *ngIf="d.approvedAmount === null || undefined || '' ">
+                                                                <span class="m-badge  m-badge--warning m-badge--wide">
+                                  Pending&nbsp;
+                                </span>
+                                                            </div>
+                                                            <div *ngIf="d.approvedAmount == 0 ">
+                                                                <span class="m-badge  m-badge--danger m-badge--wide">
+                                  Rejected&nbsp;
+                                </span>
+                                                            </div>
+                                                            <div *ngIf="d.approvedAmount">
+                                                                <span class="m-badge  m-badge--success m-badge--wide">
+                                  Approved
+                                </span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td>{{p.countryOfOrigin}}</td>
+                                            <td>
+                                                <div>
+                                                    <ul type="none">
+                                                        <li *ngFor="let d of p.proformaInvoiceDtls">{{d.packSize}}</li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <ul type="none">
+                                                        <li *ngFor="let d of p.proformaInvoiceDtls">{{d.prodType}}</li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td style="text-align: right;min-width: 100px;">
+                                                <ul type="none">
+                                                    <li *ngFor="let d of p.proformaInvoiceDtls">
+                                                        <div *ngIf="p.currency === 'Dollar'">
+                                                            <span><i class="fas fa-dollar-sign fa-xs"></i> {{d.totalPrice | number}}</span>
+                                                        </div>
+                                                        <div *ngIf="p.currency === 'Pound'">
+                                                            <span><i class="fas fa-pound-sign fa-xs"></i> {{d.totalPrice | number}}</span>
+                                                        </div>
+                                                        <div *ngIf="p.currency === 'Euro'">
+                                                            <span><i class="fas fa-euro-sign fa-xs"></i> {{d.totalPrice | number}}</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <ul type="none">
+                                                    <li *ngFor="let d of p.proformaInvoiceDtls">
+                                                        Tk- {{d.totalPriceInBdt | number}}
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <ul type="none">
+                                                    <li *ngFor="let d of p.proformaInvoiceDtls">
+                                                        <div *ngIf="d.approvalStatus=== null || undefined || ''">
+                                                            <span>
+                                --
+                              </span>
+                                                        </div>
+                                                        <div *ngIf="d.approvalStatus === false">
+                                                            <span> --</span>
+                                                        </div>
+                                                        <div *ngIf="d.approvalStatus === true">
+                                                            <span>Tk-
+                                <span
+                                  *ngIf="d.noOfUnits>0">{{((d.approvedAmount * d.totalPriceInBdt) / d.noOfUnits) | number: '1.0-0'}}</span>
+                                                            <span *ngIf="d.totalAmount>0">{{((d.approvedAmount * d.totalPriceInBdt) / d.totalAmount) | number: '1.0-0'}}</span>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '4px', fullScreenBackdrop:true}"></ngx-loading>

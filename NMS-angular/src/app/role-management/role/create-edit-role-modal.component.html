@@ -1,0 +1,65 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #roleForm="ngForm" novalidate novalidate autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="role.id">Edit Role</span>
+                        <span *ngIf="!role.id">Create New Role</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group m-form__group">
+                                <label for="RoleName">Role <span style="color:red;">*</span> </label>
+                                <!-- <input type="text" id="name" class="form-control" [(ngModel)]="role.name"
+                                    name="name" #name="ngModel"
+                                    [ngClass]="{ 'is-invalid': name.touched && name.invalid }" required />
+                                <div *ngIf="name.touched && name.invalid" class="invalid-feedback">
+                                     <div *ngIf="name.errors.required">Role is required</div> 
+                                </div> -->
+                                 <input type="text" id="name" class="form-control" [(ngModel)]="role.name"
+                                 name="name" #rname="ngModel" [ngClass]="{ 'is-invalid': rname.touched && rname.invalid }" required />
+                                    <div *ngIf="rname.touched && rname.invalid" class="invalid-feedback">
+                                    <div *ngIf="rname.errors.required">Role is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group m-form__group">
+                                <label for="fullName">Role Name <span style="color:red;">*</span> </label>
+                                <!-- <input type="text" id="name" class="form-control" [(ngModel)]="role.name"
+                                    name="name" #name="ngModel"
+                                    [ngClass]="{ 'is-invalid': name.touched && name.invalid }" required />
+                                <div *ngIf="name.touched && name.invalid" class="invalid-feedback">
+                                     <div *ngIf="name.errors.required">Role is required</div> 
+                                </div> -->
+                                 <input type="text" id="fullName" class="form-control" [(ngModel)]="role.fullName"
+                                 name="fullName" #fname="ngModel" [ngClass]="{ 'is-invalid': fname.touched && fname.invalid }" required />
+                                    <div *ngIf="fname.touched && fname.invalid" class="invalid-feedback">
+                                    <div *ngIf="fname.errors.required">Full Name is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">Cancel</button>
+                    <button *ngIf="!role.id" type="submit" class="btn btn-primary blue" (click)="save()"
+                        [disabled]="!roleForm.form.valid"><i class="fa fa-save"></i>
+                        <span>Save</span></button>
+                    <button *ngIf="role.id" type="submit" class="btn btn-info" (click)="update(role)"><i
+                            class="fa fa-save"></i>
+                        <span>Update</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

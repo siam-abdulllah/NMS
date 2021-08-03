@@ -1,0 +1,142 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- (ngSubmit)="save()" -->
+      <form *ngIf="active" #empForm="ngForm" novalidate novalidate autocomplete="off">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <span *ngIf="employee.id">Edit Employee</span>
+            <span *ngIf="!employee.id">Create New Employee</span>
+          </h4>
+          <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group m-form__group">
+                    <label for="EmployeeName">Employee Name 
+                        <span style="color:red;">*</span>
+                    </label>
+                    <!-- [ngClass]="{'is-invalid': registrationForm.get('empName').errors && registrationForm.get('empName').touched}"  -->
+                    <input type="text" id="EmployeeName" class="form-control" [(ngModel)]="employee.empName"
+                      name="empName" #empName="ngModel" [ngClass]="{ 'is-invalid': empName.touched && empName.invalid }" required empName />
+                    <div *ngIf="empName.touched && empName.invalid" class="invalid-feedback">
+                      <div *ngIf="empName.errors.required">Employee Name is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group m-form__group">
+                    <label for="Designation">Designation 
+                        <span style="color:red;">*</span>
+                    </label>
+                    <input type="text" id="Designation" class="form-control" [(ngModel)]="employee.designation"
+                      name="designation" #designation="ngModel" [ngClass]="{ 'is-invalid': designation.touched && designation.invalid }" required designation />
+                    <div *ngIf="designation.touched && designation.invalid" class="invalid-feedback">
+                      <div *ngIf="designation.errors.required">Designation is required</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group m-form__group">
+                    <label for="Email">Email 
+                        <span style="color:red;">*</span>
+                    </label>
+                    <input type="email" id="Email" class="form-control" [(ngModel)]="employee.email" name="email"
+                      placeholder="someone@domain.com" #email="ngModel"
+                      [ngClass]="{ 'is-invalid': email.touched && email.invalid }" required email
+                      pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" />
+                    <div *ngIf="email.touched && email.invalid" class="invalid-feedback">
+                      <div *ngIf="email.errors.required">Email is required</div>
+                      <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group m-form__group">
+                    <label for="ContactNo">Mobile 
+                        <span style="color:red;">*</span>
+                    </label>
+                    <!-- <input type="text" id="contactNo" class="form-control" [(ngModel)]="employee.contactNo"
+                      name="contactNo" #contactNo="ngModel" required /> -->
+                    <international-phone-number  [(ngModel)]="employee.contactNo" placeholder="Enter Contact Number"
+                      [maxlength]="20" [required]="true" #contactNo="ngModel" name="contactNo">
+                    </international-phone-number>
+                    <div *ngIf="contactNo.touched && contactNo.invalid" class="help-block" style="color: red;"><small>Mobile No is required
+                      and should be valid</small></div>
+
+                    <!-- <int-phone-prefix [defaultCountry]="'us'" #phoneNumberInput="ngModel" [(ngModel)]="contact.mobile"
+                      name="homePhone" minlength="0" maxlength="512">
+                      [allowedCountries]="['bd','in', 'ca', 'us']"
+                    </int-phone-prefix> -->
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group m-form__group">
+                    <label for="UserName">Username 
+                        <span style="color:red;">*</span>
+                    </label>
+                    <input type="text" id="username" class="form-control" [(ngModel)]="employee.username"
+                      name="username" #username="ngModel"   [ngClass]="{ 'is-invalid': username.touched && username.invalid }" required username />
+                    <div *ngIf="username.touched && username.invalid" class="invalid-feedback">
+                      <div *ngIf="username.errors.required">Username is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!employee.id" class="col-md-4">
+                  <div class="form-group m-form__group">
+                    <label for="Password">Password 
+                        <span style="color:red;">*</span>
+                    </label>
+                    <input type="password" autocomplete="new-password" id="Password" class="form-control"
+                      [(ngModel)]="employee.password" name="password" #password="ngModel"
+                      [ngClass]="{ 'is-invalid': password.touched && password.invalid }" required minlength="6" />
+                    <div *ngIf="password.touched && password.invalid" class="invalid-feedback">
+                      <div *ngIf="password.errors.required">Password is required </div>
+                      <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!employee.id" class="col-md-4">
+                  <div class="form-group m-form__group">
+                    <label for="ConfirmPassword">Confirm Password 
+                        <span style="color:red;">*</span>
+                    </label>
+                    <input type="password" autocomplete="new-password" id="ConfirmPassword" class="form-control"
+                      name="confirmPassword" [(ngModel)]="employee.confirmPassword" [ngClass]="{ 'is-invalid': confirmPassword.touched && confirmPassword.invalid }" required confirmPassword
+                      #confirmPassword="ngModel" />
+                    <div *ngIf="confirmPassword.touched && confirmPassword.invalid" class="invalid-feedback">
+                      <div *ngIf="confirmPassword.errors.required">Confirm Password is required</div>
+                    </div>
+                    <div *ngIf="confirmPassword.touched && employee.password!=employee.confirmPassword"
+                      class="invalid-feedback">
+                      Passwords not matched
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">Cancel</button>
+          <button *ngIf="!employee.id" type="submit" class="btn btn-primary blue" (click)="save()"
+            [disabled]="!empForm.form.valid || employee.password!=employee.confirmPassword"><i class="fa fa-save"></i>
+            <span>Save</span></button>
+          <button *ngIf="employee.id" type="submit" class="btn btn-info" (click)="update(employee)"><i
+              class="fa fa-save"></i>
+            <span>Update</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

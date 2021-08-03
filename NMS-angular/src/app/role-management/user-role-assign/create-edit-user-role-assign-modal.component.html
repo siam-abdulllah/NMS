@@ -1,0 +1,78 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #userRoleAssignForm="ngForm" novalidate novalidate autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="userRoleAssign.id">Edit User Role Assign</span>
+                        <span *ngIf="!userRoleAssign.id">Create New User Role Assign</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="UserName">User</label>
+                                <div class="row">
+                                    <div class="col-md-10 role-text">
+                                        <input class="form-control" id="UserName" name="UserName" [(ngModel)]="userName"
+                                            type="text" disabled>
+                                    </div>
+                                    <div class="col-md-2 role-pick">
+                                        <button class="btn btn-primary blue" (click)="openSelectUserModal()"
+                                            type="button"><i class="fa fa-search"></i>Pick</button>
+                                        <button class="btn btn-danger role-clear" type="button"
+                                            (click)="setUserIdNull()"><i class="fa fa-close"></i></button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <input type="hidden" class="form-control" name="userRoleAssign.userId"
+                                [(ngModel)]="userRoleAssign.userId" required>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="RoleName">Role</label>
+                                <div class="row">
+                                    <div class="col-md-10 role-text">
+                                        <input class="form-control" id="RoleName" name="RoleName" [(ngModel)]="roleName"
+                                            type="text" disabled>
+
+                                    </div>
+                                    <div class="col-md-2 role-pick">
+                                        <button class="btn btn-primary blue" (click)="openSelectRoleModal()"
+                                            type="button"><i class="fa fa-search"></i>Pick</button>
+                                        <button class="btn btn-danger role-clear" type="button"
+                                            (click)="setRoleIdNull()"><i class="fa fa-close"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" class="form-control" name="userRoleAssign.roleId"
+                                [(ngModel)]="userRoleAssign.roleId" required>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">Cancel</button>
+                    <button *ngIf="!userRoleAssign.id" type="submit" class="btn btn-primary blue" (click)="save()"
+                        [disabled]="!userRoleAssignForm.form.valid"><i class="fa fa-save"></i>
+                        <span>Save</span></button>
+                    <button *ngIf="userRoleAssign.id" type="submit" class="btn btn-info"
+                        (click)="update(userRoleAssign)"><i class="fa fa-save"></i>
+                        <span>Update</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <userLookupTableModal #userLookupTableModal (modalSave)="getNewUserId()"></userLookupTableModal>
+    <roleLookupTableModal #roleLookupTableModal (modalSave)="getNewRoleId()"></roleLookupTableModal>
+</div>
