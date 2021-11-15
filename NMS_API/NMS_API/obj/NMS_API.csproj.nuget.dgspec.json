@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\NOCMS\\NMS_13-01-2021_From_Ashiq\\NMS_API\\NMS_API\\NMS_API.csproj": {}
+    "E:\\NOCMS\\NMS_GIT\\NMS\\NMS_API\\NMS_API\\NMS_API.csproj": {}
   },
   "projects": {
-    "E:\\NOCMS\\NMS_13-01-2021_From_Ashiq\\NMS_API\\NMS_API\\NMS_API.csproj": {
+    "E:\\NOCMS\\NMS_GIT\\NMS\\NMS_API\\NMS_API\\NMS_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\NOCMS\\NMS_13-01-2021_From_Ashiq\\NMS_API\\NMS_API\\NMS_API.csproj",
+        "projectUniqueName": "E:\\NOCMS\\NMS_GIT\\NMS\\NMS_API\\NMS_API\\NMS_API.csproj",
         "projectName": "NMS_API",
-        "projectPath": "E:\\NOCMS\\NMS_13-01-2021_From_Ashiq\\NMS_API\\NMS_API\\NMS_API.csproj",
+        "projectPath": "E:\\NOCMS\\NMS_GIT\\NMS\\NMS_API\\NMS_API\\NMS_API.csproj",
         "packagesPath": "C:\\Users\\maaz\\.nuget\\packages\\",
-        "outputPath": "E:\\NOCMS\\NMS_13-01-2021_From_Ashiq\\NMS_API\\NMS_API\\obj\\",
+        "outputPath": "E:\\NOCMS\\NMS_GIT\\NMS\\NMS_API\\NMS_API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -91,7 +91,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

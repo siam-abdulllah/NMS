@@ -418,7 +418,7 @@
             <div class="col-md-1 "></div>
             <div class="col-md-10 ">
                 <p style="margin-bottom: 5px;margin-top: 5px;">
-                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; উপর্যুক্ত বিষয়ে আপনার {{proformaSubmissionDate}} তারিখে আবেদনের প্রেক্ষিতে পশুপুষ্টি উপকরণ ও টেরিনারি ঔষুধ সামগ্রী আমদানির অনাপত্তি সনদ (NOC) প্রদান কমিটির {{approvalDate}} তারিখে সভার সিদ্ধান্ত মোতাবেক নিম্নবর্ণিত
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; উপর্যুক্ত বিষয়ে আপনার {{proformaSubmissionDate}} তারিখে আবেদনের প্রেক্ষিতে পশুপুষ্টি উপকরণ ও ভেটেরিনারি ঔষুধ সামগ্রী আমদানির অনাপত্তি সনদ (NOC) প্রদান কমিটির {{approvalDate}} তারিখে সভার সিদ্ধান্ত মোতাবেক নিম্নবর্ণিত
                     পণ্য পত্রে উল্লেখিত শর্তসাপেক্ষে {{portOfLoading}} থেকে আমদানির জন্য অনাপত্তির সনদ প্রদান করা হল।
                 </p>
             </div>
@@ -465,7 +465,7 @@
                     <tbody style="border-collapse: collapse; ">
                         <tr style="border-collapse: collapse; ">
                             <td style="width:50px; vertical-align: middle; text-align: center; border: 1px solid #696969; padding-left: 5px; ">
-                                <ol type="1 " style="padding-left:15px;margin: 0px; ">
+                                <ol type="1" style="padding-left:25px;margin: 0px; ">
                                     <li *ngFor="let d of proformaInvoiceDtls ">
                                 </ol>
                             </td>
@@ -496,25 +496,15 @@
                             <td style="width:70px; text-align:center; vertical-align: middle; border: 1px solid #696969; padding-left: 5px; ">
                                 <p *ngFor="let d of proformaInvoiceDtls " style="margin:0px;">
                                     <span *ngIf="d.noOfUnits>0">{{d.approvedAmount}} Unit
-                <!-- <img style="height: 16px; width: 16px;"  src="https://img.icons8.com/ios/50/000000/plus-minus.png"/>
-                                        10%   -->
                 </span>
                                     <span *ngIf="d.totalAmount>0">{{d.approvedAmount}}
                                         MT
-                                        <!-- <img style="height: 16px; width: 16px;"  src="https://img.icons8.com/ios/50/000000/plus-minus.png"/>
-                                        10% -->
                                     </span>
-
-                                    <!-- <span *ngIf="d.approvedAmount zero">{{d.approvedAmount}}
-                                        MT</span>
-                                    <ng-template #zero>
-                                        0 MT
-                                    </ng-template> -->
-                                </p>
-                                <br>
+                                    <br>
                             </td>
                         </tr>
                     </tbody>
+
                 </table>
             </div>
             <div class="col-md-1"></div>
@@ -580,13 +570,15 @@
         <!-- <br> -->
         <!-- <br>
         <br> -->
-        <div class="row" style="padding-left: 840px;padding-top: 15px; text-align: center;">
+        <div class="row" style="padding-left: 840px;padding-top: 15%; text-align: center;">
             <!-- (ড. মো: আবু সুফিয়ান) <br> -->
+            (ড. মো: শাহিনুর আলম) <br>
             <!-- সহকারী পরিচালক (প্রাণিস্বাস্থ্য ও প্রশাসন) <br> -->
             উপপরিচালক (প্রাণিস্বাস্থ্য) <br> পক্ষে, মহাপরিচালক <br> প্রাণিসম্পদ অধিদপ্তর, বাংলাদেশ, ঢাকা। <br>
             <!-- ফোন: ০২-৯১১৫৮৬৮ <br> -->
             ফোন:০২-৫৮১৫৭২১১
-            <br>ই-মেইল:adhealthdls@gmail.com
+            <!-- <br>ই-মেইল:adhealthdls@gmail.com -->
+            <br>ই-মেইল:ddhealthdls@gmail.com
         </div>
         <!-- <div class="row" *ngIf="selectedNocId==1">
             <div class="col-md-1"></div>

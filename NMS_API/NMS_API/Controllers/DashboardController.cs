@@ -25,11 +25,20 @@ namespace NMS_API.Controllers
         [HttpPost("GetImporterDashboardInfo")]
         public async Task<ActionResult<ImporterDashboardDto>> GetImporterDashboardInfo(ImporterIdDto importerIdDto)
         {
+            try
+            {
             var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.SerialNumber).Value);
             if (importerIdDto.ImporterId != userId)
                 return BadRequest("UnAuthorized Access");
             var dashboard = await _repository.GetImporterDashboardInfo(userId);
             return dashboard;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
         [Authorize(Roles = "Admin, SA")]
         [HttpGet("GetAdminDashboardInfo")]

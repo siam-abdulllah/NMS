@@ -21,8 +21,16 @@ namespace NMS_API.Controllers
         [HttpGet("GetCurrency")]
         public async Task<IEnumerable<CurrencyRate>> GetCurrency()
         {
+            try
+            {
             var currencies = await _currencyRepository.Get();
             return currencies;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }
