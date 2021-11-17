@@ -6,8 +6,14 @@ import { DatePipe } from '@angular/common';
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { Pipe } from '@angular/core';
 
-
+@Pipe({ name: 'round' })
+export class RoundPipe {
+    transform(input: number) {
+        return Math.round(input);
+    }
+}
 @Component({
   selector: 'nocReport',
   templateUrl: './noc-report.component.html',
@@ -164,7 +170,7 @@ selectedNocId: number;
     this.approvalDate = this.datePipe.transform( r.approvalDate, "dd/MM/yyyy");
     this.approvalDate=this.getDigitBanglaFromEnglish(this.approvalDate);
     //this.letterNoFixed= this.datePipe.transform( r.approvalDate, "dd.MM.yyyy");
-    this.letterNoFixed='৩৩.০১.০০০০.১১১.০৫.';
+    this.letterNoFixed='৩৩.০১.০০০০.১১১.০৫';
     this.portOfLoading = r.portOfLoading;
     this.countryOfOrigin=r.countryOfOrigin;
     this.toAddress = r.importerInfo.address + ', \n' + r.importerInfo.upazila + ', \n' + r.importerInfo.district;

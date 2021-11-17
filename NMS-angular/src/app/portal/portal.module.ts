@@ -33,7 +33,7 @@ import { RoleLookupTableModalComponent } from '../lookUpTabelModals/role-lookup-
 import { InternationalPhoneNumberModule } from 'ngx-international-phone-number';
 import { ProformaInvoiceApprovalComponent } from '../proforma-invoice-approval/proforma-invoice-approval.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { NocReportComponent } from '../noc-report/noc-report.component';
+import { NocReportComponent, RoundPipe } from '../noc-report/noc-report.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ProformaInvoiceLookupTableModalComponent } from '../lookUpTabelModals/proforma-invoice-lookup-table-modal.component';
 import {DatePipe} from '@angular/common';
@@ -103,7 +103,8 @@ import { AnnualRequirementLookupTableModalComponent } from '../lookUpTabelModals
     CreateOrEditCurrencyModalComponent,
     EditInfoComponent,
     ChangePasswordComponent,
-    EditEmployeeInfoComponent
+    EditEmployeeInfoComponent,
+    RoundPipe 
   ],
   providers: [DatePipe]
 })
