@@ -65,6 +65,7 @@ export class NocReportComponent implements OnInit {
   importerAddress: any;
   onulipiId:any;
   proformaInvoiceDtls: IProformaInvoiceDtl[];
+  proformaInvoiceDtlsLength: any;
   nocTypes = [
     {id: 1, name: 'Fish Meal/DDGS/ CGM/CPC/etc.' },
     {id: 2, name: 'Veterinary Medicine/Vaccine/ DAR Items'},
@@ -177,6 +178,7 @@ selectedNocId: number;
     this.orgName = r.importerInfo.orgName;
     this.importerAddress = r.importerInfo.address;
     this.proformaInvoiceDtls = r.proformaInvoiceDtls;
+    this.proformaInvoiceDtlsLength=Math.round(r.proformaInvoiceDtls.length/2);
     if(r.portOfEntry=='Chittagong/Chattogram'){
       this.onulipiId=1;
     }

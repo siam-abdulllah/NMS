@@ -538,39 +538,39 @@
                                 <!-- <ol type="1" style="padding-left:25px;margin: 0px; "> -->
                                 <!-- <li *ngFor="let d of proformaInvoiceDtls "> -->
                                 <!-- </ol> -->
-                                {{i+1}}
+                                {{i+1}}.
                             </td>
                             <td style="width:200px; vertical-align: middle;text-align: left; border-right: solid 1px #696969; border-left: solid 1px #696969;     padding-left: 5px; ">
                                 <!-- <ul type="none " style="padding-left:5px;list-style-type: none;margin: 0px; "> -->
                                 <p>{{d.prodName}} &nbsp; {{d.prodType}}</p>
                                 <!-- </ul> -->
                             </td>
-                            <td style="width:150px; vertical-align: middle;  border-right: solid 1px #696969; border-left: solid 1px #696969;    padding-left: 5px; ">
+                            <td style="width:150px; vertical-align: middle;  border-right: solid 1px #696969; border-left: solid 1px #696969;    padding-left: 15px; ">
                                 <!-- {{ (proformaInvoiceDtls.length/2 | round:0)==i+1 && i>0 && proformaInvoiceDtls[i-1].proformaInvoiceNoproformaInvoiceNo!=d.proformaInvoiceNo?'PI-'+d.proformaInvoiceNo:''}} {{i>0 && proformaInvoiceDtls[i-1].proformaDate==d.proformaDate?'':'Dated-'+d.proformaDate}} -->
-                                {{((proformaInvoiceDtls.length/2 | round:0)==i+1 && i>0) ?'PI-'+d.proformaInvoiceNo:''}}
-                                <br>{{((proformaInvoiceDtls.length/2 | round:0)==i+1 && i>0) ?'Dated-'+proformaDate:''}}
+                                {{proformaInvoiceDtlsLength==i+1?'PI-'+proformaInvoiceNo:''}}
+                                <br>{{proformaInvoiceDtlsLength==i+1?'Dated-'+proformaDate:''}}
                                 <!-- {{d.proformaInvoiceNo}}
                                 <br>Dated-{{d.proformaDate}} -->
                             </td>
                             <td style="width:80px; text-align:center; vertical-align: middle;  border-right: solid 1px #696969; border-left: solid 1px #696969;    padding-left: 5px; ">
-                                {{((proformaInvoiceDtls.length/2 | round:0)==i+1 && i>0) ?countryOfOrigin:''}}
+                                {{proformaInvoiceDtlsLength==i+1?countryOfOrigin:''}}
                                 <!-- {{countryOfOrigin}} -->
                             </td>
-                            <td style="width:150px; vertical-align: middle;  border-right: solid 1px #696969; border-left: solid 1px #696969;    padding-left: 5px; ">
+                            <td style="width:150px; vertical-align: middle;  border-right: solid 1px #696969; border-left: solid 1px #696969;    padding-left: 15px; ">
                                 <!-- <ul type="none " style="padding-left:5px;list-style-type: none;margin: 0px; ">
                                     <li *ngFor="let d of proformaInvoiceDtls "> -->
                                 {{d.manufacturer}}
                                 <!-- </li>
                                 </ul> -->
                             </td>
-                            <td style="width: 100px;text-align:left; vertical-align: middle;  border-right: solid 1px #696969; border-left: solid 1px #696969;    ">
+                            <td style="width: 100px;text-align:left; vertical-align: middle;  border-right: solid 1px #696969; border-left: solid 1px #696969; padding-left: 5px;">
                                 <!-- <ul type="none " style="padding-left: 5px; list-style-type: none;margin: 0px;">
                                     <li *ngFor="let d of proformaInvoiceDtls "> -->
                                 {{d.packSize}}
                                 <!-- </li>
                                 </ul> -->
                             </td>
-                            <td style="width:70px; text-align:center; vertical-align: middle;  border-right: solid 1px #696969; border-left: solid 1px #696969;    padding-left: 5px; ">
+                            <td style="width:70px; text-align:center; vertical-align: middle;  border-right: solid 1px #696969; border-left: solid 1px #696969;    padding-left: 15px; ">
                                 <!-- <p *ngFor="let d of proformaInvoiceDtls " style="margin:0px;"> -->
                                 <span *ngIf="d.noOfUnits>0">{{d.approvedAmount}} Unit
                 </span>
@@ -647,9 +647,9 @@
         <!-- <br> -->
         <!-- <br>
         <br> -->
-        <div class="row" style="padding-left: 840px;padding-top: 7%; text-align: center;">
+        <div class="row" style="padding-left: 840px;padding-top: 2%; text-align: center;">
             <!-- (ড. মো: আবু সুফিয়ান) <br> -->
-            (ডা: মো: শাহিনুর আলম) <br>
+            (ডা. মো: শাহিনুর আলম) <br>
             <!-- সহকারী পরিচালক (প্রাণিস্বাস্থ্য ও প্রশাসন) <br> -->
             উপপরিচালক (প্রাণিস্বাস্থ্য) <br> পক্ষে, মহাপরিচালক <br> প্রাণিসম্পদ অধিদপ্তর, বাংলাদেশ, ঢাকা। <br>
             <!-- ফোন: ০২-৯১১৫৮৬৮ <br> -->
