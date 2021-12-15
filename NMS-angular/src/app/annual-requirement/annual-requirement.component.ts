@@ -379,7 +379,7 @@ export class AnnualRequirementComponent implements OnInit {
   }
   //
   addUpdateProduct() {
-
+  debugger;
     if (this.addMode === true) {
       const a: IAnnualRequirementDtl = {
         id: 0,
@@ -772,6 +772,7 @@ export class AnnualRequirementComponent implements OnInit {
     });
   }
   show(): void {
+    debugger;
     this.active = true;
     this.paginator.rows = 5;
     this.annualReqsModalNew.show();
@@ -817,10 +818,12 @@ export class AnnualRequirementComponent implements OnInit {
       formattedSubmissionDate = sDate.getDate() + '/' + (sDate.getMonth() + 1) + '/' + sDate.getFullYear();
     }
     if (a.confirmation === false) {
+      
       this.isSubmitted = false;
       this.updateBtnDisable = false;
       this.submitButtonDisable = false;
       this.annReqUpdateMode = false;
+    
     } else if (a.confirmation === true) {
       this.isSubmitted = true;
       this.submitButtonDisable = true;
