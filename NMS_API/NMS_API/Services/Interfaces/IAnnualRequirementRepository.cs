@@ -14,7 +14,7 @@ namespace NMS_API.Services.Interfaces
     {
         Task<AnnualRequirementMst> SaveAnnualRequirementMst(AnnualRequirementMst requirementMst, int? userId);
         Task<AnnualRequirementMst> EditAnnualRequirementMst(AnnualRequirementMst requirementMst, int? userId);
-        Task<IEnumerable<AnnualRequirementDtl>> SaveAnnualRequirementDtl(IEnumerable<AnnualRequirementDtl> requirementDtls);
+        Task<IEnumerable<AnnualRequirementDtl>> SaveAnnualRequirementDtl(IEnumerable<AnnualRequirementDtl> requirementDtls, int? userId);
         Task<AnnualRequirementMst> SubmitAnnualRequirement(AnnualRequirementMst requirementMst, int? userId);
         Task<IEnumerable<AnnualRequirementMst>> GetAnnualRequirementsByImporter(int importerId);
         Task<PagedResultDto<AnnualRequirementMst>> GetAllAnnualRequirements(GetAllInputFilter input);

@@ -82,7 +82,8 @@ namespace NMS_API.Controllers
         public async Task<ActionResult<IEnumerable<AnnualRequirementDtl>>>
             SaveAnnualRequirementDtl(IEnumerable<AnnualRequirementDtl> annualRequirementDtls)
         {
-            var annReqDtls = await _annualReqRepository.SaveAnnualRequirementDtl(annualRequirementDtls);
+            var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.SerialNumber).Value);
+            var annReqDtls = await _annualReqRepository.SaveAnnualRequirementDtl(annualRequirementDtls, userId);
             return annReqDtls.ToList();
         }
         [Authorize(Roles = "Importer, SA")]

@@ -699,6 +699,13 @@ export class AnnualRequirementComponent implements OnInit {
               this.annualRequirements = [];
               annReqDtls = [];
               this.submitButtonDisable = false;
+              const mst: IAnnualReqByMstAndImpDto = {
+                mstId: annReqMst.id,
+                // importerId: impId,
+                importerId: annReqMst.importerId,
+                annualReqNo: annReqMst.annualReqNo
+              };
+              this.getAnnualReqDtlByMstAndImporterId(mst);
             },
             err => {
               this.alertify.error('Annual Requirement Update Failed');
@@ -824,12 +831,13 @@ export class AnnualRequirementComponent implements OnInit {
       this.submitButtonDisable = false;
       this.annReqUpdateMode = false;
     
-    } else if (a.confirmation === true) {
-      this.isSubmitted = true;
-      this.submitButtonDisable = true;
-      this.updateBtnDisable = true;
-      this.annReqUpdateMode = true;
     }
+    // else if (a.confirmation === true) {
+    //   this.isSubmitted = true;
+    //   this.submitButtonDisable = true;
+    //   this.updateBtnDisable = true;
+    //   this.annReqUpdateMode = true;
+    // }
     this.saveButtonTitle = 'Update';
     this.annualRequirementMstForm.get('annualReqNo').setValue(a.annualReqNo);
     this.annualReqNo = a.annualReqNo;

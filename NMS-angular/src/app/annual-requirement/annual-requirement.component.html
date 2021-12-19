@@ -140,9 +140,9 @@
                                             <span style="color:red;">*</span>
                                             <input type="text" class="form-control" id="product-name" [ngClass]="{'is-invalid': annualRequirementsForm.get('prodName').errors && annualRequirementsForm.get('prodName').touched}" formControlName="prodName">
                                             <div class="invalid-feedback" *ngIf="annualRequirementsForm.get('prodName').hasError('required')
-                                           && annualRequirementsForm.get('prodName').touched">Product name required</div>
+                                            && annualRequirementsForm.get('prodName').touched">Product name required</div>
                                             <div class="invalid-feedback" *ngIf="annualRequirementsForm.get('prodName').hasError('maxlength')
-                                              && annualRequirementsForm.get('prodName').touched"> Product name can be max 50 Character long</div>
+                                            && annualRequirementsForm.get('prodName').touched"> Product name can be max 50 Character long</div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">

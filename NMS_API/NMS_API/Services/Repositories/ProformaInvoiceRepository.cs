@@ -429,7 +429,7 @@ namespace NMS_API.Services.Repositories
             var lastDate = lastDay.AddHours(23).AddMinutes(59).AddSeconds(59);
             var prodDtls = await (from d in _nmsDataContext.AnnualRequirementDtls
                                   join m in _nmsDataContext.AnnualRequirementMsts on d.AnnReqMstId equals m.Id
-                                  where (m.ImporterId == importerId && m.SubmissionDate >= firstDay && m.SubmissionDate <= lastDate)
+                                  where (m.ImporterId == importerId && m.Confirmation==true && m.SubmissionDate >= firstDay && m.SubmissionDate <= lastDate)
                                   select new AnnReqProdDtlsForProforDto
                                   {
                                       ProductId = d.Id,

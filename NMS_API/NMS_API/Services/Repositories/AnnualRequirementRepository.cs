@@ -31,7 +31,7 @@ namespace NMS_API.Services.Repositories
             return allAnnReqMst;
         }
 
-  
+
 
         public async Task<IEnumerable<AnnualRequirementDtl>> GetAnnualReqDtlByMstAndImporterId(AnnualReqByMstAndImpDto ann)
         {
@@ -66,15 +66,15 @@ namespace NMS_API.Services.Repositories
                 var annualRequirements = (from a in _nmsDataContext.AnnualRequirementMsts
                                           where a.Confirmation == true && (a.AnnualReqNo.Contains(input.Filter) || a.ImporterId.ToString().Contains(input.Filter))
 
-                                    select new AnnualRequirementMst
-                                    {
-                                        Id = a.Id,
-                                        AnnualReqNo = a.AnnualReqNo,
-                                        ImporterId = a.ImporterId,
-                                        Confirmation = a.Confirmation,
-                                        SubmissionDate = a.SubmissionDate,
-                                        AnnualRequirementDtls= _nmsDataContext.AnnualRequirementDtls.Where(x => x.AnnReqMstId == a.Id).ToList()
-                                    });
+                                          select new AnnualRequirementMst
+                                          {
+                                              Id = a.Id,
+                                              AnnualReqNo = a.AnnualReqNo,
+                                              ImporterId = a.ImporterId,
+                                              Confirmation = a.Confirmation,
+                                              SubmissionDate = a.SubmissionDate,
+                                              AnnualRequirementDtls = _nmsDataContext.AnnualRequirementDtls.Where(x => x.AnnReqMstId == a.Id).ToList()
+                                          });
 
                 var totalCount = await annualRequirements.CountAsync();
 
@@ -109,37 +109,41 @@ namespace NMS_API.Services.Repositories
             }
         }
 
-        public async Task<IEnumerable<AnnualRequirementDtl>> SaveAnnualRequirementDtl(IEnumerable<AnnualRequirementDtl> requirementDtls)
+        public async Task<IEnumerable<AnnualRequirementDtl>> SaveAnnualRequirementDtl(IEnumerable<AnnualRequirementDtl> requirementDtls, int? userId)
         {
             try
             {
+                
                 if (requirementDtls.Count() > 0)
                 {
                     foreach (var d in requirementDtls)
                     {
-                        if (d.Id !=0)
+                        if (d.Id != 0)
                         {
                             AnnualRequirementDtl annualRequirementDtl = await _nmsDataContext.AnnualRequirementDtls.FirstOrDefaultAsync(i => i.Id == d.Id);
                             if (annualRequirementDtl != null)
                             {
-                                annualRequirementDtl.Id = d.Id;
-                                annualRequirementDtl.AnnReqMstId = d.AnnReqMstId;
-                                annualRequirementDtl.ProdName = d.ProdName;
-                                annualRequirementDtl.ProdType = d.ProdType;
-                                annualRequirementDtl.HsCode = d.HsCode;
-                                annualRequirementDtl.Manufacturer = d.Manufacturer;
-                                annualRequirementDtl.CountryOfOrigin = d.CountryOfOrigin;
-                                annualRequirementDtl.PackSize = d.PackSize;
-                                annualRequirementDtl.Currency = d.Currency;
-                                annualRequirementDtl.TotalAmount = d.TotalAmount;
-                                annualRequirementDtl.TentativeUnits = d.TentativeUnits;
-                                annualRequirementDtl.UnitPrice = d.UnitPrice;
-                                annualRequirementDtl.ExchangeRate = d.ExchangeRate;
-                                annualRequirementDtl.TotalPrice = d.TotalPrice;
-                                annualRequirementDtl.TotalPriceInBdt = d.TotalPriceInBdt;
-                                
-                                _nmsDataContext.AnnualRequirementDtls.Update(annualRequirementDtl);
-                                await _nmsDataContext.SaveChangesAsync();
+                                if (GetAnnReqProdDtlsByImpEditMode(userId, d.ProdName, d.PackSize, d.HsCode).Count == 0)
+                                {
+                                    annualRequirementDtl.Id = d.Id;
+                                    annualRequirementDtl.AnnReqMstId = d.AnnReqMstId;
+                                    annualRequirementDtl.ProdName = d.ProdName;
+                                    annualRequirementDtl.ProdType = d.ProdType;
+                                    annualRequirementDtl.HsCode = d.HsCode;
+                                    annualRequirementDtl.Manufacturer = d.Manufacturer;
+                                    annualRequirementDtl.CountryOfOrigin = d.CountryOfOrigin;
+                                    annualRequirementDtl.PackSize = d.PackSize;
+                                    annualRequirementDtl.Currency = d.Currency;
+                                    annualRequirementDtl.TotalAmount = d.TotalAmount;
+                                    annualRequirementDtl.TentativeUnits = d.TentativeUnits;
+                                    annualRequirementDtl.UnitPrice = d.UnitPrice;
+                                    annualRequirementDtl.ExchangeRate = d.ExchangeRate;
+                                    annualRequirementDtl.TotalPrice = d.TotalPrice;
+                                    annualRequirementDtl.TotalPriceInBdt = d.TotalPriceInBdt;
+
+                                    _nmsDataContext.AnnualRequirementDtls.Update(annualRequirementDtl);
+                                    await _nmsDataContext.SaveChangesAsync();
+                                }
                             }
                         }
                         else
@@ -157,6 +161,49 @@ namespace NMS_API.Services.Repositories
             }
         }
 
+        //new start
+        public List<AnnReqProdDtlsForProforDto> GetAnnReqProdDtlsByImpEditMode(int? importerId, string prodName, string packSize, string hsCode)
+        {
+            //int year = DateTime.Now.Year;
+            //DateTime firstDay = new DateTime(year, 1, 1);
+            //DateTime lastDay = new DateTime(year, 12, 31);
+            int year = DateTime.Now.Year;
+            DateTime first_Date_Of_Fiscal_Year = new DateTime(year, 7, 1);
+            DateTime currentDate = DateTime.Now;
+            int lastyear = 0;
+            if (first_Date_Of_Fiscal_Year > currentDate)
+            {
+                lastyear = DateTime.Now.AddYears(-1).Year;
+            }
+            else
+            {
+                lastyear = year;
+                try
+                {
+                    //DateTime y = DateTime.Now.AddYears(1);
+                    year = DateTime.Now.AddYears(1).Year;
+
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+            DateTime firstDay = new DateTime(lastyear, 7, 1);
+            DateTime lastDay = new DateTime(year, 6, 30);
+            var lastDate = lastDay.AddHours(23).AddMinutes(59).AddSeconds(59);
+            var prodDtls = (from d in _nmsDataContext.ProformaInvoiceDtls
+                            join m in _nmsDataContext.ProformaInvoiceMsts on d.MstId equals m.Id
+                            where (m.ImporterId == importerId && d.ProdName == prodName && d.PackSize == packSize && d.HsCode == hsCode
+                            && m.SubmissionDate >= firstDay && m.SubmissionDate <= lastDate)
+                            select new AnnReqProdDtlsForProforDto
+                            {
+                                ProductId = d.Id,
+                            }).ToList();
+
+            return prodDtls;
+        }
+        //new end
         public async Task<AnnualRequirementMst> SaveAnnualRequirementMst(AnnualRequirementMst requirementMst, int? userId)
         {
             try
@@ -164,7 +211,7 @@ namespace NMS_API.Services.Repositories
                 var totalAnnualReq = await GetAllAnnualReqMst();
                 var maxAnnReqNo = Convert.ToInt32(totalAnnualReq.Max(x => x.AnnualReqNo));
                 NumberGenerator numberGenerator = new NumberGenerator();
-                var annReqNo = numberGenerator.GenerateAnnualReqNo(maxAnnReqNo+1, 6);
+                var annReqNo = numberGenerator.GenerateAnnualReqNo(maxAnnReqNo + 1, 6);
                 //requirementMst.SubmissionDate = DateTime.Now;
                 requirementMst.SubmissionDate = null;
                 requirementMst.Confirmation = false;
@@ -189,7 +236,7 @@ namespace NMS_API.Services.Repositories
                 annualRequirementMst.Confirmation = false;
                 annualRequirementMst.UpdatedBy = userId;
                 annualRequirementMst.UpdatedDate = DateTime.Now;
-                requirementMst.SubmissionDate = null;
+                //requirementMst.SubmissionDate = null;
             }
             _nmsDataContext.AnnualRequirementMsts.Update(annualRequirementMst);
             await _nmsDataContext.SaveChangesAsync();
@@ -200,15 +247,22 @@ namespace NMS_API.Services.Repositories
         {
             var dt = DateTime.Now;
             AnnualRequirementMst annualRequirementMst = await _nmsDataContext.AnnualRequirementMsts
-                .FirstOrDefaultAsync(i => i.AnnualReqNo == requirementMst.AnnualReqNo 
-                && i.Id==requirementMst.Id && i.ImporterId==requirementMst.ImporterId);
+                .FirstOrDefaultAsync(i => i.AnnualReqNo == requirementMst.AnnualReqNo
+                && i.Id == requirementMst.Id && i.ImporterId == requirementMst.ImporterId);
 
             if (annualRequirementMst != null)
             {
                 annualRequirementMst.Confirmation = true;
                 annualRequirementMst.UpdatedBy = userId;
                 annualRequirementMst.UpdatedDate = DateTime.Now;
-                annualRequirementMst.SubmissionDate = DateTime.Now;
+                if (annualRequirementMst.SubmissionDate != null)
+                {
+                    annualRequirementMst.SubmissionDate = annualRequirementMst.SubmissionDate;
+                }
+                else
+                {
+                    annualRequirementMst.SubmissionDate = DateTime.Now;
+                }
             }
             _nmsDataContext.AnnualRequirementMsts.Update(annualRequirementMst);
             await _nmsDataContext.SaveChangesAsync();
@@ -296,5 +350,5 @@ namespace NMS_API.Services.Repositories
                 throw ex;
             }
         }
-     }
+    }
 }
