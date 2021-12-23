@@ -46,4 +46,7 @@ export class AnnualRequirementService {
   IsAnnualRequirementExist(model: any) {
     return this.http.post(this.baseUrl + 'IsAnnualRequirementExist', model);
   }
+  IsProdAlreadyPI(model: any) {
+    return this.http.post(this.baseUrl + 'IsProdAlreadyPI', model);
+  }
 }

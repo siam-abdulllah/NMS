@@ -260,7 +260,7 @@ selectedportOfEntryId: number;
       const piFormData = new FormData();
       piFormData.append('piFile', f);
       this.proformaService.updatePiFile(piFormData, this.piMstId).subscribe(resp => {
-        this.alertify.success('Proforma Invoice updated successfullt.');
+        this.alertify.success('Proforma Invoice updated successfully.');
         const piMst = resp as IProformaInvoiceMst;
       }, error => {
         console.log(console.error);
@@ -293,7 +293,7 @@ selectedportOfEntryId: number;
       litFormData.append('litFile', f);
       this.proformaService.updateLitFile(litFormData, this.piMstId).subscribe(resp => {
         const piMst = resp as IProformaInvoiceMst;
-        this.alertify.success('Literature review updated successfullt.');
+        this.alertify.success('Literature review updated successfully.');
       }, error => {
         console.log(console.error);
       });
@@ -325,7 +325,7 @@ selectedportOfEntryId: number;
       testFormData.append('testFile', f);
       this.proformaService.updateTestFile(testFormData, this.piMstId).subscribe(resp => {
         const piMst = resp as IProformaInvoiceMst;
-        this.alertify.success('Test Report updated successfullt');
+        this.alertify.success('Test Report updated successfully');
       }, error => {
         console.log(console.error);
       });
@@ -356,7 +356,7 @@ selectedportOfEntryId: number;
       const otherFormData = new FormData();
       otherFormData.append('otherFile', f);
       this.proformaService.updateOtherFile(otherFormData, this.piMstId).subscribe(resp => {
-        this.alertify.success('Other Document updated successfullt');
+        this.alertify.success('Other Document updated successfully');
         const piMst = resp as IProformaInvoiceMst;
       }, error => {
         console.log(console.error);
@@ -547,9 +547,16 @@ selectedportOfEntryId: number;
     };
     this.proformaService.getProductListFromAnnualReq(importerDto).subscribe( resp => {
       this.annProds = resp as IAnnReqProdDtlsForProforDto[];
-      console.log(this.annProds);
+      //console.log(this.annProds);
+      debugger;
       this.loading = false;
-      this.openAnnReqProdModal(this.annualReqProdModal);
+      if(this.annProds.length>0){
+        this.openAnnReqProdModal(this.annualReqProdModal);
+      }
+      else{
+        this.alertify.warning('Please Complete Annual Requirement First');
+      }
+      
     }, error => {
       console.log(error);
     });

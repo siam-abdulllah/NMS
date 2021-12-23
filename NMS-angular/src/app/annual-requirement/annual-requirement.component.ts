@@ -492,25 +492,42 @@ export class AnnualRequirementComponent implements OnInit {
       this.alertify.warning('Edit option disabled for old annual requirements');
       return false;
     }
-    this.updateProd = p;
-    this.annualRequirementsForm.setValue({
-      prodName: p.prodName,
-      prodType: p.prodType,
-      hsCode: p.hsCode,
-      packSize: p.packSize,
-      // manufacturer: p.manufacturer,
-      // countryOfOrigin: p.countryOfOrigin,
-      tentativeUnits: p.tentativeUnits || undefined || null,
-      // unitPrice: p.unitPrice,
-      // totalPrice: p.totalPrice,
-      // totalPriceInBdt: p.totalPriceInBdt,
-      // currency: p.currency,
-      // exchangeRate: p.exchangeRate,
-      totalAmount: p.totalAmount || undefined || null
-    });
-    this.openRequireModal('update');
-    this.editMode = true;
-    this.addMode = false;
+    
+    this.annualRequirementService.IsProdAlreadyPI(p).subscribe(
+      resp => {
+        debugger;
+        var exist = resp;
+          if (exist) {
+            this.alertify.warning('Edit option disabled for already proforma invoice product');
+            return false;
+          }
+          else{
+            this.updateProd = p;
+            this.annualRequirementsForm.setValue({
+              prodName: p.prodName,
+              prodType: p.prodType,
+              hsCode: p.hsCode,
+              packSize: p.packSize,
+              // manufacturer: p.manufacturer,
+              // countryOfOrigin: p.countryOfOrigin,
+              tentativeUnits: p.tentativeUnits || undefined || null,
+              // unitPrice: p.unitPrice,
+              // totalPrice: p.totalPrice,
+              // totalPriceInBdt: p.totalPriceInBdt,
+              // currency: p.currency,
+              // exchangeRate: p.exchangeRate,
+              totalAmount: p.totalAmount || undefined || null
+            });
+            this.openRequireModal('update');
+            this.editMode = true;
+            this.addMode = false;
+          }
+      },
+      error => {
+       // this.alertify.error('Annual Requirement Save Failed');
+        console.log(error);
+      });
+  
   }
   confirm(): void {
     this.modalRef.hide();
@@ -689,9 +706,7 @@ export class AnnualRequirementComponent implements OnInit {
           };
           annReqDtls.push(obj);
         }
-        this.annualRequirementService
-          .saveAnnualRequirementDtl(annReqDtls)
-          .subscribe(
+        this.annualRequirementService.saveAnnualRequirementDtl(annReqDtls).subscribe(
             respon => {
               const annualReqDtl = respon as IAnnualRequirementDtl[];
               this.loading = false;
@@ -708,11 +723,19 @@ export class AnnualRequirementComponent implements OnInit {
               this.getAnnualReqDtlByMstAndImporterId(mst);
             },
             err => {
+              debugger;
+              this.loading = false;
               this.alertify.error('Annual Requirement Update Failed');
               console.log(err);
             }
           );
       },
+      err => {
+        debugger;
+        this.loading = false;
+        this.alertify.error(err.error);
+        console.log(err);
+      }
     );
 
   }

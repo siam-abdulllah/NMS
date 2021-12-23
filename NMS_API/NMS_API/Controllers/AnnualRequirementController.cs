@@ -52,6 +52,9 @@ namespace NMS_API.Controllers
             try
             {
                 var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.SerialNumber).Value);
+                var res = await _annualReqRepository.IsAnnualRequirementAlreadySubmittedThisYear(annualRequirementMst);
+                if (!res)
+                    return BadRequest("Privious fiscal year Annual Requirement can not be updated");
                 var annualReqMst = await _annualReqRepository.EditAnnualRequirementMst(annualRequirementMst, userId);
                 return annualReqMst;
             }
@@ -147,6 +150,17 @@ namespace NMS_API.Controllers
             if (userId != importer.ImporterId)
                 return BadRequest("Unauthorized access");
             res = await _annualReqRepository.IsAnnualRequirementExist(importer.ImporterId);
+            if (res)
+                return true;
+            return false;
+        }
+        [Authorize(Roles = "Importer, SA")]
+        [HttpPost("IsProdAlreadyPI")]
+        public ActionResult<bool> IsProdAlreadyPI(AnnualRequirementDtl annualRequirementDtls)
+        {
+            var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.SerialNumber).Value);
+            bool res = false;
+            res = _annualReqRepository.IsProdAlreadyPI(annualRequirementDtls, userId);
             if (res)
                 return true;
             return false;

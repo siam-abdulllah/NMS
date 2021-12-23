@@ -231,6 +231,7 @@ namespace NMS_API.Services.Repositories
         {
             var dt = DateTime.Now;
             AnnualRequirementMst annualRequirementMst = await _nmsDataContext.AnnualRequirementMsts.FirstOrDefaultAsync(i => i.AnnualReqNo == requirementMst.AnnualReqNo);
+            
             if (annualRequirementMst != null)
             {
                 annualRequirementMst.Confirmation = false;
@@ -301,6 +302,38 @@ namespace NMS_API.Services.Repositories
                 return false;
             return true;
         }
+        public async Task<bool> IsAnnualRequirementAlreadySubmittedThisYear(AnnualRequirementMst requirementMst)
+        {
+            int year = DateTime.Now.Year;
+            DateTime first_Date_Of_Fiscal_Year = new DateTime(year, 7, 1);
+            DateTime currentDate = DateTime.Now;
+            int lastyear = 0;
+            if (first_Date_Of_Fiscal_Year > currentDate)
+            {
+                lastyear = DateTime.Now.AddYears(-1).Year;
+            }
+            else
+            {
+                lastyear = year;
+                try
+                {
+                    //DateTime y = DateTime.Now.AddYears(1);
+                    year = DateTime.Now.AddYears(1).Year;
+
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+            DateTime firstDay = new DateTime(lastyear, 7, 1);
+            DateTime lastDay = new DateTime(year, 6, 30);
+            var lastDate = lastDay.AddHours(23).AddMinutes(59).AddSeconds(59);
+            var annualReqMst = await _nmsDataContext.AnnualRequirementMsts.FirstOrDefaultAsync(x => x.SubmissionDate >= firstDay && x.SubmissionDate <= lastDate && x.AnnualReqNo == requirementMst.AnnualReqNo);
+            if (annualReqMst == null)
+                return false;
+            return true;
+        }
 
         public async Task<bool> IsAnnualRequirementExist(int importerId)
         {
@@ -331,6 +364,13 @@ namespace NMS_API.Services.Repositories
             var lastDate = lastDay.AddHours(23).AddMinutes(59).AddSeconds(59);
             var annualReqMst = await _nmsDataContext.AnnualRequirementMsts.FirstOrDefaultAsync(x => x.InsertedDate >= firstDay && x.InsertedDate <= lastDate && x.ImporterId == importerId);
             if (annualReqMst == null)
+                return false;
+            return true;
+        }   
+        public bool IsProdAlreadyPI(AnnualRequirementDtl d, int? userId)
+        {
+
+            if (GetAnnReqProdDtlsByImpEditMode(userId, d.ProdName, d.PackSize, d.HsCode).Count == 0)
                 return false;
             return true;
         }

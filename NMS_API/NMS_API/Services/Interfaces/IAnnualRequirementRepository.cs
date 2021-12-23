@@ -23,6 +23,8 @@ namespace NMS_API.Services.Interfaces
         Task<IEnumerable<AnnualRequirementDtl>> GetAnnualReqDtlByMstAndImporterId(AnnualReqByMstAndImpDto annualReqByMstAndImp);
         Task<ImporterInfo> GetImporterInfoByAnnualReq(AnnualReqByMstAndImpDto annualReqByMstAndImp);
         Task<bool> IsAnnualRequirementAlreadySubmittedThisYear(int importerId);
+        Task<bool> IsAnnualRequirementAlreadySubmittedThisYear(AnnualRequirementMst requirementMst);
         Task<bool> IsAnnualRequirementExist(int importerId);
+        bool IsProdAlreadyPI(AnnualRequirementDtl requirementDtls, int? userId);
     }
 }
