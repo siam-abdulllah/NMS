@@ -792,6 +792,7 @@ export class AnnualRequirementComponent implements OnInit {
     };
 
     this.annualRequirementService.searchAnnualRequirements(importer).subscribe(resp => {
+      debugger;
       this.annReqs = resp as IAllAnnualRequirements[];
       this.openModal(this.annualReqsModal);
       this.loading = false;

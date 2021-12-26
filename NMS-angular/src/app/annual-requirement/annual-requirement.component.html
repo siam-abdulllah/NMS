@@ -255,10 +255,11 @@
                                 <!-- <td style="display: none;">{{a.importerId}}</td> -->
                                 <td>{{a.importerId}}</td>
                                 <td>
-                                    <div *ngIf="a.submissionDate == null" style="background-color: #ffb822;">
+                                    <div *ngIf="a.submissionDate == null || a.confirmation==false" style="background-color: #ffb822;">
                                         Not Submitted
                                     </div>
-                                    <div *ngIf="a.submissionDate">
+
+                                    <div *ngIf="a.submissionDate && a.confirmation==true">
                                         {{a.submissionDate | date}}
                                     </div>
                                 </td>
