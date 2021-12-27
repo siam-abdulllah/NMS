@@ -37,7 +37,7 @@ namespace NMS_API.Controllers
             return result;
 
         }
-        [Authorize(Roles = "Admin, SA")]
+        //[Authorize(Roles = "Admin, SA")]
         [HttpPost("GetImporterInfoById")]
         public async Task<ImporterInfo> GetImporterInfoById(ImporterIdDto importerIdDto)
         {
